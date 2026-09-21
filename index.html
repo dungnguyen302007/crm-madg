@@ -137,9 +137,9 @@
         </button>
 
         <button onclick="switchTab('marketing')" id="nav-marketing" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
-          <i data-lucide="repeat" class="w-4 h-4 text-purple-600"></i>
-          <span class="flex-1 text-left">Nhắc Mua Hạt & Bảo Dưỡng Máy</span>
-          <span class="bg-purple-50 text-purple-700 text-[10px] font-semibold px-1.5 py-0.5 rounded">Tự động</span>
+          <i data-lucide="megaphone" class="w-4 h-4 text-pink-600"></i>
+          <span class="flex-1 text-left">Marketing & Nuôi Dưỡng F&B</span>
+          <span class="bg-pink-50 text-pink-700 text-[10px] font-bold px-1.5 py-0.5 rounded">Lead & ROI</span>
         </button>
 
         <div class="pt-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1">Lộ trình Giai đoạn tiếp theo</div>
@@ -668,9 +668,83 @@
 
       </div>
 
-      <!-- VIEW 5: MARKETING TỰ ĐỘNG & BẢO DƯỠNG MÁY -->
+      <!-- VIEW 5: MARKETING & NUÔI DƯỠNG TỰ ĐỘNG -->
       <div id="view-marketing" class="p-6 space-y-6 hidden">
         
+        <!-- MARKETING TOP BANNER: ROI & LEAD SOURCES -->
+        <div class="bg-gradient-to-r from-pink-600 via-rose-500 to-madg-orange rounded-2xl p-5 text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="p-3 bg-white/20 rounded-xl">
+              <i data-lucide="megaphone" class="w-6 h-6 text-white"></i>
+            </div>
+            <div>
+              <span class="bg-white/20 text-white text-[10px] font-bold uppercase px-2 py-0.5 rounded">Trung tâm tiếp thị F&B</span>
+              <h3 class="font-black text-sm md:text-base mt-0.5">Phân Tích Nguồn Khách Hàng & Chiến Dịch Tự Động Hóa MADG</h3>
+              <p class="text-xs text-pink-100">Đo lường chi phí thu hút khách (CPL/CAC), hiệu quả từng kênh quảng cáo và kích hoạt kịch bản giữ chân quán quen.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="alert('Đã kích hoạt chiến dịch Zalo ZNS: Tặng voucher 10% cà phê hạt cho 35 quán thân thiết!')" class="px-3.5 py-2 bg-white text-pink-600 hover:bg-pink-50 text-xs font-bold rounded-xl shadow transition flex items-center gap-1.5">
+              <i data-lucide="send" class="w-3.5 h-3.5"></i> Kích Hoạt Chiến Dịch Zalo
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 LEAD SOURCES METRIC CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <!-- Kênh 1 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-1.5">
+              <span class="text-xs font-semibold">Facebook Ads (Mở quán trọn gói)</span>
+              <span class="p-1.5 rounded-lg bg-blue-50 text-blue-600"><i data-lucide="facebook" class="w-4 h-4"></i></span>
+            </div>
+            <div class="text-lg font-black text-slate-900">45 Quán Tiếp Cận</div>
+            <div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+              <span>Chốt: <strong>8 Combo máy</strong></span>
+              <span class="font-bold text-emerald-600">ROI 22.8x</span>
+            </div>
+          </div>
+
+          <!-- Kênh 2 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-1.5">
+              <span class="text-xs font-semibold">Triển Lãm Vietfood / Cafe Show</span>
+              <span class="p-1.5 rounded-lg bg-purple-50 text-purple-600"><i data-lucide="award" class="w-4 h-4"></i></span>
+            </div>
+            <div class="text-lg font-black text-slate-900">28 Khách Hàng</div>
+            <div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+              <span>Chốt: <strong>6 Máy lớn</strong></span>
+              <span class="font-bold text-emerald-600">ROI 18.5x</span>
+            </div>
+          </div>
+
+          <!-- Kênh 3 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-1.5">
+              <span class="text-xs font-semibold">Zalo OA & Nhóm Khách Quen</span>
+              <span class="p-1.5 rounded-lg bg-sky-50 text-sky-600"><i data-lucide="message-square" class="w-4 h-4"></i></span>
+            </div>
+            <div class="text-lg font-black text-slate-900">35 Quán Tái Mua Hạt</div>
+            <div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+              <span>Doanh số: <strong>68 triệu</strong></span>
+              <span class="font-bold text-emerald-600">Chi phí: 0đ</span>
+            </div>
+          </div>
+
+          <!-- Kênh 4 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-1.5">
+              <span class="text-xs font-semibold">Giới Thiệu & Khách Vãng Lai</span>
+              <span class="p-1.5 rounded-lg bg-amber-50 text-madg-orange"><i data-lucide="users" class="w-4 h-4"></i></span>
+            </div>
+            <div class="text-lg font-black text-slate-900">14 Quán Mới</div>
+            <div class="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+              <span>Chốt: <strong>4 Combo máy</strong></span>
+              <span class="font-bold text-emerald-600">Tỷ lệ chốt 40%</span>
+            </div>
+          </div>
+        </div>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           
           <!-- BLOCK 1: NHẮC TÁI MUA NGUYÊN LIỆU (HẠT CÀ PHÊ) -->
