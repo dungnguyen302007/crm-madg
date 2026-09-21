@@ -75,11 +75,46 @@ Khách hàng cung cấp công thức hoặc chỉ tiêu cụ thể:
 
 ---
 
-## 3. THÔNG TIN HẠ TẦNG KẾT NỐI
+## 3. DỮ LIỆU & YÊU CẦU BỘ PHẬN MARKETING CẦN CUNG CẤP
+
+Để hệ thống CRM đo lường được hiệu quả của từng đồng ngân sách quảng cáo và tự động hóa khâu giữ chân khách hàng mua cà phê hạt, Bộ phận Marketing của MADG cần chuẩn bị:
+
+### 1. Danh sách các Kênh Tiếp Cận Khách Hàng (Lead Sources)
+Cung cấp danh sách các kênh mà MADG đang tìm kiếm khách hàng mở quán F&B:
+- **Facebook Ads:** Đang chạy các chiến dịch nào? (Ví dụ: Chiến dịch "Setup quán cà phê trọn gói", Chiến dịch "Combo máy pha Faema giá sốc").
+- **Kênh Zalo OA / Zalo ZNS / Nhóm Khách Quen:** Dùng để thông báo ưu đãi và chăm sóc khách cũ.
+- **Sự kiện Triển lãm ngành F&B:** Triển lãm Vietfood & Beverage, triển lãm Cafe Show hàng năm (thu thập danh thiếp, quét mã QR).
+- **Website & Hotline:** Form đăng ký tư vấn trên website MADG, số hotline tổng đài.
+- **Khách hàng cũ giới thiệu & Đối tác nhượng quyền.**
+
+### 2. Các Chương Trình Khuyến Mại & Ưu Đãi Mở Quán
+- Chính sách tặng hạt cà phê ban đầu khi mua máy (ví dụ: mua máy pha tặng 5kg hạt Robusta + ca đánh sữa).
+- Chính sách chiết khấu khi chủ quán mở chi nhánh thứ 2, thứ 3.
+- Chính sách hỗ trợ trả góp hoặc đặt cọc giữ máy.
+
+### 3. Kịch Bản Tự Động Hóa Chăm Sóc & Giữ Chân (Marketing Automation)
+- **Kịch bản nhắc tiếp tế hạt cà phê (Chu kỳ 15 - 20 ngày):** Quán cà phê thường dùng hết 1 đợt hạt trong 2-3 tuần. Hệ thống CRM sẽ tự động phát cảnh báo nhắc nhân viên Sales gọi lại hoặc tự động gửi tin nhắn Zalo ZNS/SMS gửi mã ưu đãi tiếp tế hạt.
+- **Kịch bản bảo dưỡng máy định kỳ (Chu kỳ 90 ngày):** Máy pha cà phê sau 3 tháng cần thay gioăng cao su, vệ sinh họng pha và tẩy cặn canxi boiler. Hệ thống tự động tạo lịch hẹn kỹ thuật đến quán hỗ trợ.
+
+---
+
+## 4. THÔNG TIN HẠ TẦNG KẾT NỐI & CẢNH BÁO
 
 1. **Kênh nhận cảnh báo nội bộ:** Doanh nghiệp ưu tiên nhận thông báo (cảnh báo trùng khách, cảnh báo KPI ngày 29, thông báo đơn mới) qua đâu:
-   - Nhóm Telegram riêng của công ty?
+   - Nhóm Telegram riêng của công ty MADG? (Miễn phí, bảo mật cao, khuyên dùng).
    - Zalo OA / Nhóm Zalo?
    - Hay hiển thị trực tiếp trên Notification của CRM Web?
 2. **Kỳ vọng giao tiếp AI MCP:**
-   - Khen ngợi/ra lệnh thêm khách hàng bằng giọng nói hoặc tin nhắn ngắn: Nhân viên sẽ gõ qua giao diện web CRM hay tích hợp qua Bot Telegram/Zalo ngoài thị trường?
+   - Nhân sự ra lệnh thêm khách hàng bằng giọng nói hoặc tin nhắn ngắn: Sẽ gõ qua giao diện web CRM hay tích hợp qua Bot Telegram/Zalo ngoài thị trường?
+
+---
+
+## BẢNG TỔNG HỢP CHECKLIST CẦN GỬI (5 HẠNG MỤC)
+
+| STT | Hạng mục cần cung cấp | Định dạng | Tác dụng trong Giai đoạn 1 |
+| :---: | :--- | :--- | :--- |
+| **1** | File danh sách khách hàng & lead mẫu (5-10 dòng) | Excel / Google Sheet | Thiết kế Database khách hàng, cài thuật toán chống trùng quán & giấu số điện thoại. |
+| **2** | File danh mục sản phẩm & tồn kho máy/nguyên liệu | Excel / Google Sheet | Cài đặt tính năng Đối chiếu Kho (Excel Diff) và nạp dữ liệu cho AI MCP tra cứu giá. |
+| **3** | Mẫu Báo giá Combo mở quán thực tế (1 bản) | Excel / PDF | Thiết kế tính năng tạo báo giá nhanh và xuất file PDF trong 30 giây. |
+| **4** | Quy chế KPI & Cơ chế Cảnh báo Sớm Ngày 29 | Ghi chú văn bản | Cài đặt cảnh báo nước rút trước kỳ phát lương ngày 10 (chốt ngày 30). |
+| **5** | **Dữ liệu Kênh Marketing & Kịch bản Tự động hóa** | **Ghi chú văn bản** | **Đo lường ROI từng kênh quảng cáo, kịch bản Zalo tiếp tế hạt (15 ngày) & bảo dưỡng máy (90 ngày).** |
