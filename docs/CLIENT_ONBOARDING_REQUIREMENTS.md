@@ -116,12 +116,13 @@ Từ các trường trên, Marketing lọc và **xuất 4 danh sách cụ thể*
 
 ---
 
-## BẢNG TỔNG HỢP CHECKLIST CẦN GỬI (5 HẠNG MỤC)
+## BẢNG TỔNG HỢP CHECKLIST CẦN GỬI (ĐẦY ĐỦ 6 HẠNG MỤC)
 
 | STT | Hạng mục cần cung cấp | Định dạng | Tác dụng trong Giai đoạn 1 |
 | :---: | :--- | :--- | :--- |
 | **1** | File danh sách khách hàng & lead mẫu (5-10 dòng) | Excel / Google Sheet | Thiết kế Database khách hàng, cài thuật toán chống trùng quán & giấu số điện thoại. |
 | **2** | File danh mục sản phẩm & tồn kho máy/nguyên liệu | Excel / Google Sheet | Cài đặt tính năng Đối chiếu Kho (Excel Diff) và nạp dữ liệu cho AI MCP tra cứu giá. |
 | **3** | Mẫu Báo giá Combo mở quán thực tế (1 bản) | Excel / PDF | Thiết kế tính năng tạo báo giá nhanh và xuất file PDF trong 30 giây. |
-| **4** | Quy chế KPI & Cơ chế Cảnh báo Sớm Ngày 29 | Ghi chú văn bản | Cài đặt cảnh báo nước rút trước kỳ phát lương ngày 10 (chốt ngày 30). |
-| **5** | **Dữ liệu Kênh Marketing & Kịch bản Tự động hóa** | **Ghi chú văn bản** | **Đo lường ROI từng kênh quảng cáo, kịch bản Zalo tiếp tế hạt (15 ngày) & bảo dưỡng máy (90 ngày).** |
+| **4** | Quy chế Phân quyền bảo mật & Cảnh báo KPI 29 | Ghi chú văn bản | Cài đặt ma trận che/mở SĐT chống lộ data và quét KPI nước rút ngày 29. |
+| **5** | Dữ liệu Kênh Marketing & Kịch bản Tự động hóa | Ghi chú văn bản | Đo lường ROI từng kênh quảng cáo, kịch bản Zalo tiếp tế hạt (15 ngày) & bảo dưỡng máy (90 ngày). |
+| **6** | **Danh Sách Nhân Sự MADG Cần Tạo Tài Khoản** | **Excel / Ghi chú** | **Cấp tài khoản đăng nhập CRM, gán đúng vai trò và chi nhánh cho từng nhân sự ban đầu.** |

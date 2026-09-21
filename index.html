@@ -142,6 +142,12 @@
           <span class="bg-pink-50 text-pink-700 text-[10px] font-bold px-1.5 py-0.5 rounded">Lead & ROI</span>
         </button>
 
+        <button onclick="switchTab('users')" id="nav-users" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
+          <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
+          <span class="flex-1 text-left">Danh Sách Nhân Sự & Tài Khoản</span>
+          <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-1.5 py-0.5 rounded">6 TK</span>
+        </button>
+
         <div class="pt-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1">Lộ trình Giai đoạn tiếp theo</div>
         <div class="px-3 py-2 text-xs text-slate-400 flex items-center gap-2 cursor-not-allowed">
           <i data-lucide="users" class="w-4 h-4"></i> Giai đoạn 2: Nhân sự & Chấm công
@@ -831,6 +837,152 @@
 
       </div>
 
+      <!-- VIEW 6: DANH SÁCH NHÂN SỰ & PHÂN QUYỀN TÀI KHOẢN -->
+      <div id="view-users" class="p-6 space-y-6 hidden">
+        <!-- TOP BANNER -->
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-madg-blue rounded-2xl p-5 text-white shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="p-3 bg-white/20 rounded-xl">
+              <i data-lucide="user-check" class="w-6 h-6 text-white"></i>
+            </div>
+            <div>
+              <span class="bg-white/20 text-white text-[10px] font-bold uppercase px-2 py-0.5 rounded">Quản trị nội bộ</span>
+              <h3 class="font-black text-sm md:text-base mt-0.5">Danh Sách Nhân Sự & Tài Khoản Vận Hành CRM MADG</h3>
+              <p class="text-xs text-emerald-100">Cấp tài khoản đăng nhập, gán đúng vai trò và kiểm soát phân quyền bảo mật dữ liệu khách hàng.</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="alert('Mở form cấp tài khoản nhân viên mới!')" class="px-3.5 py-2 bg-white text-emerald-700 hover:bg-emerald-50 text-xs font-bold rounded-xl shadow transition flex items-center gap-1.5">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> Cấp Tài Khoản Mới
+            </button>
+          </div>
+        </div>
+
+        <!-- USERS TABLE -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+            <div class="flex items-center gap-2">
+              <i data-lucide="users" class="w-4 h-4 text-emerald-600"></i>
+              <h4 class="text-xs font-bold text-slate-800">Danh Sách Tài Khoản Nhân Sự Đã Khởi Tạo (6 Tài Khoản)</h4>
+            </div>
+            <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">100% Hoạt động (Active)</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="py-3 px-4">Họ và Tên Nhân Sự</th>
+                  <th class="py-3 px-4">Email Đăng Nhập</th>
+                  <th class="py-3 px-4">Số Điện Thoại</th>
+                  <th class="py-3 px-4">Phòng Ban</th>
+                  <th class="py-3 px-4">Vai Trò Gán Quyền CRM</th>
+                  <th class="py-3 px-4">Khu Vực Phụ Trách</th>
+                  <th class="py-3 px-4">Trạng Thái</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr class="hover:bg-slate-50">
+                  <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">VA</div>
+                    <div>
+                      <p>Nguyễn Văn A</p>
+                      <span class="text-[10px] text-slate-400 font-normal">Mã NV: MADG-001</span>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-mono text-slate-600">giamdoc@madg.vn</td>
+                  <td class="py-3 px-4 font-mono font-semibold text-slate-800">0909 111 222</td>
+                  <td class="py-3 px-4 font-medium">Ban Giám Đốc</td>
+                  <td class="py-3 px-4 font-bold text-emerald-700">👑 Ban Giám Đốc (Admin Toàn Quyền)</td>
+                  <td class="py-3 px-4 text-slate-600">Toàn quốc</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px]">Đang hoạt động</span></td>
+                </tr>
+
+                <tr class="hover:bg-slate-50">
+                  <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs">TN</div>
+                    <div>
+                      <p>Trần Nhật Nam</p>
+                      <span class="text-[10px] text-slate-400 font-normal">Mã NV: MADG-002</span>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-mono text-slate-600">nam.tn@madg.vn</td>
+                  <td class="py-3 px-4 font-mono font-semibold text-slate-800">0903 888 999</td>
+                  <td class="py-3 px-4 font-medium">Phòng Kinh Doanh</td>
+                  <td class="py-3 px-4 font-bold text-blue-700">💼 Trưởng Phòng Sales</td>
+                  <td class="py-3 px-4 text-slate-600">TP.HCM & Miền Nam</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px]">Đang hoạt động</span></td>
+                </tr>
+
+                <tr class="hover:bg-slate-50">
+                  <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs">AT</div>
+                    <div>
+                      <p>Bùi Anh Tuấn</p>
+                      <span class="text-[10px] text-slate-400 font-normal">Mã NV: MADG-003</span>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-mono text-slate-600">tuan.ba@madg.vn</td>
+                  <td class="py-3 px-4 font-mono font-semibold text-slate-800">0912 345 678</td>
+                  <td class="py-3 px-4 font-medium">Phòng Kinh Doanh</td>
+                  <td class="py-3 px-4 font-bold text-amber-700">🏃 Nhân Viên Sales (Ẩn SĐT Khách Khác)</td>
+                  <td class="py-3 px-4 text-slate-600">Hà Nội & Miền Bắc</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px]">Đang hoạt động</span></td>
+                </tr>
+
+                <tr class="hover:bg-slate-50">
+                  <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-pink-100 text-pink-700 flex items-center justify-center font-bold text-xs">LH</div>
+                    <div>
+                      <p>Lê Thị Hồng</p>
+                      <span class="text-[10px] text-slate-400 font-normal">Mã NV: MADG-004</span>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-mono text-slate-600">hong.lt@madg.vn</td>
+                  <td class="py-3 px-4 font-mono font-semibold text-slate-800">0934 666 777</td>
+                  <td class="py-3 px-4 font-medium">Bộ Phận Marketing</td>
+                  <td class="py-3 px-4 font-bold text-pink-700">📣 Quản Lý Lead & Chiến Dịch</td>
+                  <td class="py-3 px-4 text-slate-600">Toàn quốc</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px]">Đang hoạt động</span></td>
+                </tr>
+
+                <tr class="hover:bg-slate-50">
+                  <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-xs">TM</div>
+                    <div>
+                      <p>Nguyễn Thu Mai</p>
+                      <span class="text-[10px] text-slate-400 font-normal">Mã NV: MADG-005</span>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-mono text-slate-600">mai.kt@madg.vn</td>
+                  <td class="py-3 px-4 font-mono font-semibold text-slate-800">0988 555 666</td>
+                  <td class="py-3 px-4 font-medium">Kế Toán - Kho</td>
+                  <td class="py-3 px-4 font-bold text-purple-700">📦 Kế Toán & Đối Chiếu Kho Excel</td>
+                  <td class="py-3 px-4 text-slate-600">Kho Tổng TP.HCM</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px]">Đang hoạt động</span></td>
+                </tr>
+
+                <tr class="hover:bg-slate-50">
+                  <td class="py-3 px-4 font-bold text-slate-900 flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs">VB</div>
+                    <div>
+                      <p>Nguyễn Văn Bình</p>
+                      <span class="text-[10px] text-slate-400 font-normal">Mã NV: MADG-006</span>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-mono text-slate-600">binh.kt@madg.vn</td>
+                  <td class="py-3 px-4 font-mono font-semibold text-slate-800">0977 444 333</td>
+                  <td class="py-3 px-4 font-medium">Kỹ Thuật Máy</td>
+                  <td class="py-3 px-4 font-bold text-sky-700">🔧 Kỹ Thuật Viên (Lịch Bảo Trì 90 Ngày)</td>
+                  <td class="py-3 px-4 text-slate-600">Khu vực Miền Nam</td>
+                  <td class="py-3 px-4"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 font-bold text-[10px]">Đang hoạt động</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 
@@ -1131,7 +1283,7 @@
 
     // TAB NAVIGATION
     function switchTab(tabId) {
-      const views = ['dashboard', 'customers', 'ai-mcp', 'inventory', 'marketing'];
+      const views = ['dashboard', 'customers', 'ai-mcp', 'inventory', 'marketing', 'users'];
       views.forEach(v => {
         document.getElementById(`view-${v}`).classList.add('hidden');
         document.getElementById(`nav-${v}`).classList.remove('active-tab');
@@ -1156,8 +1308,11 @@
         pageTitle.innerHTML = '<i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i> Đối Chiếu & Đồng Bộ Kho Excel (Diff & Sync Engine)';
         pageSubtitle.innerText = 'Kế toán tải file Excel lên -> Hệ thống so khớp chênh lệch số lượng, giá bán và cảnh báo bất thường trước khi ghi nhận.';
       } else if (tabId === 'marketing') {
-        pageTitle.innerHTML = '<i data-lucide="repeat" class="w-5 h-5 text-purple-600"></i> Tiếp Thị Tự Động & Lịch Bảo Trì Máy 90 Ngày';
-        pageSubtitle.innerText = 'Cảnh báo quán sắp cạn hạt cà phê (chu kỳ 15-20 ngày) và nhắc nhở thay gioăng bảo dưỡng máy pha định kỳ.';
+        pageTitle.innerHTML = '<i data-lucide="megaphone" class="w-5 h-5 text-pink-600"></i> Tiếp Thị & Phễu Chăm Sóc Khách Hàng F&B Tự Động';
+        pageSubtitle.innerText = 'Đo lường ROI từng kênh quảng cáo và kích hoạt kịch bản tự động giữ chân quán quen mua hạt.';
+      } else if (tabId === 'users') {
+        pageTitle.innerHTML = '<i data-lucide="user-check" class="w-5 h-5 text-emerald-600"></i> Đội Ngũ Nhân Sự & Danh Sách Tài Khoản CRM';
+        pageSubtitle.innerText = 'Quản lý tài khoản đăng nhập, gán đúng vai trò phòng ban và phân quyền bảo mật dữ liệu.';
       }
       lucide.createIcons();
     }
