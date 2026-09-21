@@ -49,29 +49,39 @@ Dùng để thiết kế luồng tạo báo giá thông minh (CPQ) và xuất fi
 
 ---
 
-## 2. QUY CHẾ VẬN HÀNH & PHÂN QUYỀN BẢO MẬT (DẠNG VĂN BẢN/NOTE)
+## 2. VAI TRÒ TRÁCH NHIỆM, DANH SÁCH TẠO TÀI KHOẢN & MA TRẬN CHE/MỞ DỮ LIỆU
 
-### 1. Phân quyền Nhân sự & Bảo mật dữ liệu
-Khách hàng làm rõ các vai trò và phạm vi xem dữ liệu:
-- **Ban Giám đốc:** Toàn quyền xem báo cáo tổng thể, doanh số, lợi nhuận, chi phí giá vốn, quản trị hệ thống.
-- **Trưởng phòng Kinh doanh:** Xem toàn bộ khách hàng và deal của cả phòng ban; phân bổ khách hàng cho nhân viên; duyệt báo giá có chiết khấu cao vượt thẩm quyền.
-- **Nhân viên Kinh doanh (Sales):** Chỉ xem khách hàng được phân công cho mình. Có cần ẩn (Masking) số điện thoại của khách (ví dụ: `098****321`) để phòng ngừa việc nhân viên đem tệp khách hàng sang công ty đối thủ không?
-- **Kế toán & Thủ kho:** Thao tác nhập/xuất kho, cập nhật giá bán, tải file Excel đối chiếu kho, kiểm duyệt công nợ và thanh toán.
-- **Kỹ thuật & Bảo hành:** Xem danh sách máy đã bán, số serial, lịch giao lắp và bảo trì định kỳ, ghi chú tình trạng máy.
+### 1. Vai Trò & Trách Nhiệm Từng Bộ Phận Trên CRM
+- **Ban Giám Đốc (Admin):** Toàn quyền kiểm soát hệ thống; xem doanh thu toàn công ty, chi phí giá vốn thiết bị, lợi nhuận gộp; duyệt các chính sách chiết khấu lớn; kiểm tra Audit Log (nhật ký truy cập và thao tác dữ liệu).
+- **Trưởng Phòng Kinh Doanh (Sales Manager):** Phân bổ Lead cho nhân viên Sales; theo dõi bảng giám sát cảnh báo KPI ngày 29; duyệt báo giá theo hạn mức; xử lý khiếu nại tranh chấp trùng quán giữa các Sales.
+- **Nhân Viên Kinh Doanh (Sales Executive):** Tiếp nhận và chăm sóc quán được phân công; tạo báo giá combo mở quán; cập nhật lịch sử cuộc gọi/demo; nhận cảnh báo nhắc khách tái mua hạt cà phê sau 15 ngày.
+- **Bộ Phận Marketing:** Đổ Lead từ Facebook Ads, Zalo, Cafe Show vào CRM; đo lường chi phí/doanh số từng kênh (ROI); trích xuất Lead chưa chốt để chạy kịch bản nuôi dưỡng tự động.
+- **Kế Toán & Thủ Kho:** Tải file Excel đối chiếu kho để cập nhật số lượng tồn và giá bán; xuất kho máy khi có đơn hàng; theo dõi tiến độ thanh toán và công nợ.
+- **Kỹ Thuật & Bảo Hành:** Xem lịch giao lắp đặt máy pha; quản lý số Serial từng máy; thực hiện lịch bảo dưỡng định kỳ 90 ngày (thay gioăng cao su, tẩy cặn boiler).
 
-### 2. Quy chế KPI & Cơ chế Cảnh báo Sớm Ngày 29
-Khách hàng cung cấp công thức hoặc chỉ tiêu cụ thể:
-- **Các tiêu chí đánh giá KPI tháng:**
-  - Doanh số chốt máy & thiết bị (VNĐ).
-  - Doanh số bán nguyên liệu lặp lại (VNĐ).
-  - Số lượng khách hàng mới mang về trong tháng.
-- **Quy tắc cảnh báo sớm:**
-  - Ngày 25: Cảnh báo nước rút 5 ngày cho các deal tiềm năng đang đàm phán.
-  - Ngày 29: Cảnh báo những nhân viên chưa đạt KPI tối thiểu, hoặc nhân viên sắp chạm mốc bậc thưởng tiếp theo (còn thiếu bao nhiêu tiền) để kích thích tinh thần chốt số phút chót.
+### 2. Ma Trận Phân Loại Dữ Liệu & Nguyên Tắc Che / Mở (Data Masking)
+Nhằm chống thất thoát dữ liệu khách hàng và bảo mật bí mật kinh doanh khi nhân viên nghỉ việc:
 
-### 3. Quy tắc Chăm sóc Tự động & Marketing (Automation Rules)
-- Chu kỳ tiêu hao: Sau khi quán mua cà phê hạt, hệ thống mặc định sau **bao nhiêu ngày** sẽ tự động bắn nhắc việc cho Sales gọi lại tiếp tế nguyên liệu? (Ví dụ: 15 ngày hay 20 ngày).
-- Chu kỳ bảo dưỡng máy: Sau **bao nhiêu tháng** kể từ ngày giao máy thì kích hoạt lịch bảo dưỡng định kỳ thay gioăng, tẩy cặn? (Ví dụ: 3 tháng hay 6 tháng).
+| Loại Dữ Liệu Nhạy Cảm | Ban Giám Đốc | Trưởng Phòng Sales | Nhân Viên Sales | Kế Toán / Kho | Kỹ Thuật |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Số điện thoại khách hàng** | Mở 100% | Mở (Cả phòng ban) | **Mở khách mình / Che `090****456` khách khác** | Mở khi có lệnh giao | Mở khi có lịch bảo trì |
+| **Giá vốn / Giá nhập máy** | Mở 100% | **KHÓA** | **KHÓA TUYỆT ĐỐI** | Mở 100% | **KHÓA** |
+| **Bảng lương & Hoa hồng** | Toàn công ty | Chỉ xem phòng ban | Chỉ xem của bản thân | Xem để làm lương | **KHÓA** |
+| **Xuất file Excel ra ngoài** | Toàn quyền | Cần Giám đốc duyệt | **KHÓA (Chống tuồn data)** | Xuất báo cáo kho | **KHÓA** |
+| **Xóa dữ liệu khách hàng** | Chỉ Lưu Trữ (Archive) | **KHÓA** | **KHÓA** | **KHÓA** | **KHÓA** |
+
+### 3. Bảng Mẫu Danh Sách Nhân Sự MADG Cần Cấp Tài Khoản
+MADG cung cấp danh sách nhân viên tham gia vận hành CRM theo các cột sau:
+
+| Họ và Tên | Email Đăng Nhập | Số Điện Thoại | Phòng Ban | Vai Trò Gán Quyền | Khu Vực Phụ Trách |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| *Nguyễn Văn A (Mẫu)* | *giamdoc@madg.vn* | *0909 111 222* | *Ban Giám Đốc* | *Ban Giám Đốc (Admin)* | *Toàn quốc* |
+| *Bùi Anh Tuấn (Mẫu)* | *tuan.ba@madg.vn* | *0912 345 678* | *Phòng Kinh Doanh* | *Nhân Viên Sales* | *Hà Nội & Miền Bắc* |
+| *Nguyễn Thu Mai (Mẫu)* | *mai.kt@madg.vn* | *0988 555 666* | *Kế Toán - Kho* | *Kế Toán & Thủ Kho* | *Kho Tổng TP.HCM* |
+
+### 4. Quy Chế Cảnh Báo KPI Nước Rút Ngày 29
+- Mức chỉ tiêu KPI tháng thông thường của 1 nhân viên Sales (Doanh số máy & Doanh số hạt).
+- Hệ thống tự động quét vào **ngày 25 và 29 hàng tháng** để cảnh báo nhân viên nguy cơ rớt KPI và gợi ý danh sách deal chốt nước rút.
 
 ---
 

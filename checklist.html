@@ -308,38 +308,203 @@
           <span class="text-[11px] font-bold px-2.5 py-1 bg-amber-50 text-madg-darkorange border border-amber-200 rounded-lg">Quy định nội bộ</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          <!-- Item 1 -->
-          <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div class="flex items-center gap-1.5 font-bold text-red-600">
-              <i data-lucide="alarm-clock" class="w-4 h-4"></i> Cảnh Báo Nước Rút Ngày 29
+      <!-- MỤC 4: VAI TRÒ TRÁCH NHIỆM, DANH SÁCH NHÂN SỰ TẠO TK & NGUYÊN TẮC CHE/MỞ DỮ LIỆU -->
+      <section class="space-y-5">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 rounded-xl bg-amber-100 text-madg-orange font-bold">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
-            <p class="text-slate-600 text-[11px] leading-relaxed">
-              MADG cung cấp chỉ tiêu KPI tháng thông thường của 1 nhân viên Sales (ví dụ: Doanh số máy 150 triệu, Doanh số hạt 30 triệu).<br>
-              $\rightarrow$ Hệ thống sẽ tự động quét vào <strong>ngày 25 và 29 hàng tháng</strong> để cảnh báo nhân viên nguy cơ rớt KPI và gợi ý danh sách deal chốt nước rút.
-            </p>
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 uppercase">Mục 4: Phân Quyền Nhân Sự, Danh Sách Tạo Tài Khoản & Nguyên Tắc Che/Mở Dữ Liệu</h2>
+              <p class="text-xs text-slate-500">Mục đích: Thiết lập bảo mật đa tầng, chống rò rỉ danh sách khách hàng và xác định trách nhiệm rõ ràng từng phòng ban.</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-bold px-2.5 py-1 bg-amber-50 text-madg-darkorange border border-amber-200 rounded-lg">Bảo mật cấp cao</span>
+        </div>
+
+        <!-- 1. VAI TRÒ & TRÁCH NHIỆM TỪNG BỘ PHẬN -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+          <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5 uppercase">
+            <i data-lucide="users" class="w-4 h-4 text-madg-blue"></i> 1. Vai Trò & Trách Nhiệm Từng Bộ Phận Trên CRM
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-900 text-[11px] flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 👑 Ban Giám Đốc (Admin)
+              </p>
+              <p class="text-slate-600 text-[10px] leading-relaxed">
+                Toàn quyền hệ thống. Giám sát doanh số toàn công ty, kiểm soát giá vốn, lợi nhuận gộp, duyệt chính sách chiết khấu lớn và xem Audit Log vết thao tác.
+              </p>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-900 text-[11px] flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-blue-500"></span> 💼 Trưởng Phòng Sales (Manager)
+              </p>
+              <p class="text-slate-600 text-[10px] leading-relaxed">
+                Phân bổ Lead cho nhân viên, giám sát tiến độ KPI ngày 29, duyệt báo giá theo khung, giải quyết tranh chấp trùng khách và hỗ trợ chốt deal lớn.
+              </p>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-900 text-[11px] flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-amber-500"></span> 🏃 Nhân Viên Sales (Executive)
+              </p>
+              <p class="text-slate-600 text-[10px] leading-relaxed">
+                Tiếp nhận và chăm sóc khách được giao, tạo báo giá combo, cập nhật nhật ký gọi/demo máy, nhắc quán lấy hạt cà phê sau 15 ngày.
+              </p>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-900 text-[11px] flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-pink-500"></span> 📣 Bộ Phận Marketing
+              </p>
+              <p class="text-slate-600 text-[10px] leading-relaxed">
+                Đổ Lead từ các kênh (Facebook Ads, Zalo, Cafe Show) vào CRM, đo lường chi phí/doanh số từng kênh (ROI), tái kích hoạt Lead chưa chốt.
+              </p>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-900 text-[11px] flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-purple-500"></span> 📦 Kế Toán & Thủ Kho
+              </p>
+              <p class="text-slate-600 text-[10px] leading-relaxed">
+                Tải file Excel đối chiếu kho, cập nhật giá nhập/giá bán, xuất kho máy và nguyên liệu khi có lệnh giao hàng, kiểm soát công nợ quán.
+              </p>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-900 text-[11px] flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-sky-500"></span> 🔧 Kỹ Thuật & Bảo Hành
+              </p>
+              <p class="text-slate-600 text-[10px] leading-relaxed">
+                Xem lịch bàn giao và lắp đặt máy pha, lưu số Serial máy, thực hiện lịch bảo dưỡng định kỳ 90 ngày (thay gioăng cao su, tẩy cặn boiler).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. MA TRẬN NGUYÊN TẮC CHE / MỞ DỮ LIỆU (BẢO MẬT) -->
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+          <div class="p-3.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
+            <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5 uppercase">
+              <i data-lucide="eye-off" class="w-4 h-4 text-red-600"></i> 2. Ma Trận Phân Loại Dữ Liệu & Nguyên Tắc Che / Mở (Data Masking)
+            </h3>
+            <span class="text-[10px] font-semibold text-slate-500">Chống thất thoát dữ liệu khách hàng</span>
           </div>
 
-          <!-- Item 2 -->
-          <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div class="flex items-center gap-1.5 font-bold text-madg-blue">
-              <i data-lucide="lock" class="w-4 h-4"></i> Phân Quyền Giấu Số Điện Thoại
-            </div>
-            <p class="text-slate-600 text-[11px] leading-relaxed">
-              Xác nhận chính sách: Có muốn che 4 số giữa của SĐT khách (<code>090****456</code>) đối với nhân viên Sales thông thường để bảo vệ tệp khách độc quyền của MADG khi nhân viên nghỉ việc không?
-            </p>
+          <div class="overflow-x-auto">
+            <table class="w-full text-[11px] text-left">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="py-2.5 px-3">Loại Dữ Liệu Nhạy Cảm</th>
+                  <th class="py-2.5 px-3">Ban Giám Đốc</th>
+                  <th class="py-2.5 px-3">Trưởng Phòng Sales</th>
+                  <th class="py-2.5 px-3">Nhân Viên Sales</th>
+                  <th class="py-2.5 px-3">Kế Toán / Kho</th>
+                  <th class="py-2.5 px-3">Kỹ Thuật</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-700">
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">Số điện thoại khách hàng</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Mở 100%</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Mở (Khách cả team)</td>
+                  <td class="py-2.5 px-3 text-amber-700 font-bold">
+                    <span class="bg-amber-50 px-1.5 py-0.5 rounded">Mở khách mình / Che <code>090****456</code> khách người khác</span>
+                  </td>
+                  <td class="py-2.5 px-3 text-slate-600">Mở khi có đơn giao</td>
+                  <td class="py-2.5 px-3 text-slate-600">Mở khi có lịch bảo trì</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">Giá vốn / Giá nhập thiết bị</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Mở 100%</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA TUYỆT ĐỐI</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Mở</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">Bảng lương, KPI & Hoa hồng</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Toàn công ty</td>
+                  <td class="py-2.5 px-3 text-blue-700 font-bold">Chỉ xem phòng ban</td>
+                  <td class="py-2.5 px-3 text-slate-700">Chỉ xem của bản thân</td>
+                  <td class="py-2.5 px-3 text-slate-600">Xem để làm lương</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">Xuất file Excel ra ngoài (Export)</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Toàn quyền</td>
+                  <td class="py-2.5 px-3 text-amber-700 font-bold">Cần Giám đốc duyệt</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA (Chống tuồn data)</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Xuất báo cáo kho</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 px-3 font-semibold text-slate-900">Xóa dữ liệu khách hàng</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-bold">Chỉ Lưu Trữ (Archive)</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                  <td class="py-2.5 px-3 text-red-600 font-bold">KHÓA</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+        </div>
 
-          <!-- Item 3 -->
-          <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div class="flex items-center gap-1.5 font-bold text-purple-600">
-              <i data-lucide="repeat" class="w-4 h-4"></i> Chu Kỳ Nhắc Mua & Bảo Trì
-            </div>
-            <p class="text-slate-600 text-[11px] leading-relaxed">
-              - Sau bao nhiêu ngày kể từ ngày giao đơn hạt gần nhất thì nhắc Sales gọi lại? (Thường là 15 - 20 ngày).<br>
-              - Sau bao nhiêu tháng kể từ khi bán máy thì nhắc lịch kỹ thuật thay gioăng cao su và khử cặn boiler? (Thường là 3 - 6 tháng).
-            </p>
+        <!-- 3. BẢNG MẪU DANH SÁCH NHÂN SỰ ĐỂ TẠO TÀI KHOẢN -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5 uppercase">
+              <i data-lucide="user-plus" class="w-4 h-4 text-emerald-600"></i> 3. Danh Sách Nhân Sự MADG Cần Cấp Tài Khoản Ban Đầu
+            </h3>
+            <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">MADG điền danh sách</span>
           </div>
+          <p class="text-[11px] text-slate-500">Quý công ty chỉ cần điền danh sách nhân sự tham gia vận hành CRM theo mẫu dưới đây để đội kỹ thuật tạo tài khoản và phân quyền:</p>
+
+          <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+            <table class="w-full text-[11px] text-left">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="py-2 px-3">Họ và Tên</th>
+                  <th class="py-2 px-3">Email Đăng Nhập</th>
+                  <th class="py-2 px-3">Số Điện Thoại</th>
+                  <th class="py-2 px-3">Phòng Ban</th>
+                  <th class="py-2 px-3">Vai Trò Gán Quyền</th>
+                  <th class="py-2 px-3">Khu Vực Phụ Trách</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 text-slate-600 font-sans">
+                <tr>
+                  <td class="py-2 px-3 font-semibold text-slate-900">Nguyễn Văn A (Mẫu)</td>
+                  <td class="py-2 px-3 font-mono text-slate-500">giamdoc@madg.vn</td>
+                  <td class="py-2 px-3 font-mono">0909 111 222</td>
+                  <td class="py-2 px-3">Ban Giám Đốc</td>
+                  <td class="py-2 px-3 font-bold text-emerald-600">Ban Giám Đốc (Admin)</td>
+                  <td class="py-2 px-3">Toàn quốc</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-semibold text-slate-900">Bùi Anh Tuấn (Mẫu)</td>
+                  <td class="py-2 px-3 font-mono text-slate-500">tuan.ba@madg.vn</td>
+                  <td class="py-2 px-3 font-mono">0912 345 678</td>
+                  <td class="py-2 px-3">Phòng Kinh Doanh</td>
+                  <td class="py-2 px-3 font-bold text-blue-600">Nhân Viên Sales</td>
+                  <td class="py-2 px-3">Hà Nội & Miền Bắc</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-semibold text-slate-900">Nguyễn Thu Mai (Mẫu)</td>
+                  <td class="py-2 px-3 font-mono text-slate-500">mai.kt@madg.vn</td>
+                  <td class="py-2 px-3 font-mono">0988 555 666</td>
+                  <td class="py-2 px-3">Kế Toán - Kho</td>
+                  <td class="py-2 px-3 font-bold text-purple-600">Kế Toán & Thủ Kho</td>
+                  <td class="py-2 px-3">Kho Tổng TP.HCM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="text-[10px] text-slate-400 italic">Lưu ý: Mật khẩu khởi tạo mặc định sẽ được gửi riêng và nhân viên bắt buộc đổi mật khẩu trong lần đầu đăng nhập.</p>
         </div>
       </section>
 
