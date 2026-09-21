@@ -75,26 +75,23 @@ Khách hàng cung cấp công thức hoặc chỉ tiêu cụ thể:
 
 ---
 
-## 3. DỮ LIỆU & YÊU CẦU BỘ PHẬN MARKETING CẦN CUNG CẤP
+## 3. VAI TRÒ MARKETING TRÊN CRM: DỰA VÀO ĐÂU & LẤY GÌ RA ĐỂ HÀNH ĐỘNG?
 
-Để hệ thống CRM đo lường được hiệu quả của từng đồng ngân sách quảng cáo và tự động hóa khâu giữ chân khách hàng mua cà phê hạt, Bộ phận Marketing của MADG cần chuẩn bị:
+Nhân sự Marketing của MADG làm việc trên CRM hoàn toàn xoay quanh việc **khai thác tệp Lead (Khách hàng tiềm năng)** để không lãng phí ngân sách quảng cáo và nuôi dưỡng quán mua hạt cà phê định kỳ:
 
-### 1. Danh sách các Kênh Tiếp Cận Khách Hàng (Lead Sources)
-Cung cấp danh sách các kênh mà MADG đang tìm kiếm khách hàng mở quán F&B:
-- **Facebook Ads:** Đang chạy các chiến dịch nào? (Ví dụ: Chiến dịch "Setup quán cà phê trọn gói", Chiến dịch "Combo máy pha Faema giá sốc").
-- **Kênh Zalo OA / Zalo ZNS / Nhóm Khách Quen:** Dùng để thông báo ưu đãi và chăm sóc khách cũ.
-- **Sự kiện Triển lãm ngành F&B:** Triển lãm Vietfood & Beverage, triển lãm Cafe Show hàng năm (thu thập danh thiếp, quét mã QR).
-- **Website & Hotline:** Form đăng ký tư vấn trên website MADG, số hotline tổng đài.
-- **Khách hàng cũ giới thiệu & Đối tác nhượng quyền.**
+### A. Nhân sự Marketing DỰA VÀO ĐÂU trên CRM?
+Marketing căn cứ vào **4 trường dữ liệu cốt lõi của Lead** đã được lưu trong hệ thống:
+1. **Dựa vào "Nguồn Lead" (Lead Source):** Khách đến từ Facebook Ads (chiến dịch nào), Triển lãm Cafe Show, Zalo OA hay Khách quen?
+2. **Dựa vào "Trạng Thái Lead" (Lead Stage):** Khách mới nhận / Đang tìm mặt bằng / Chê giá đắt / Đang phân vân combo máy / Đã mua máy?
+3. **Dựa vào "Mô Hình Quán & Nhu Cầu Thiết Bị":** Quán sắp mở mới (cần setup trọn gói) hay Quán đang chạy (chỉ cần lấy hạt cà phê/đổi máy)?
+4. **Dựa vào "Ngày Mua Gần Nhất":** Quán đã lấy cà phê hạt cách đây bao nhiêu ngày (15 hay 20 ngày)? Máy pha đã lắp đặt được bao nhiêu tháng (đã đến mốc 90 ngày chưa)?
 
-### 2. Các Chương Trình Khuyến Mại & Ưu Đãi Mở Quán
-- Chính sách tặng hạt cà phê ban đầu khi mua máy (ví dụ: mua máy pha tặng 5kg hạt Robusta + ca đánh sữa).
-- Chính sách chiết khấu khi chủ quán mở chi nhánh thứ 2, thứ 3.
-- Chính sách hỗ trợ trả góp hoặc đặt cọc giữ máy.
-
-### 3. Kịch Bản Tự Động Hóa Chăm Sóc & Giữ Chân (Marketing Automation)
-- **Kịch bản nhắc tiếp tế hạt cà phê (Chu kỳ 15 - 20 ngày):** Quán cà phê thường dùng hết 1 đợt hạt trong 2-3 tuần. Hệ thống CRM sẽ tự động phát cảnh báo nhắc nhân viên Sales gọi lại hoặc tự động gửi tin nhắn Zalo ZNS/SMS gửi mã ưu đãi tiếp tế hạt.
-- **Kịch bản bảo dưỡng máy định kỳ (Chu kỳ 90 ngày):** Máy pha cà phê sau 3 tháng cần thay gioăng cao su, vệ sinh họng pha và tẩy cặn canxi boiler. Hệ thống tự động tạo lịch hẹn kỹ thuật đến quán hỗ trợ.
+### B. Nhân sự Marketing LẤY DỮ LIỆU GÌ RA để làm việc?
+Từ các trường trên, Marketing lọc và **xuất 4 danh sách cụ thể** để hành động:
+1. **Lấy ra Danh sách "Lead chưa chốt máy" (Lead đang ngủ quên):** Lọc các quán chưa chốt vì chưa có mặt bằng hoặc phân vân giá $\rightarrow$ Marketing gửi kịch bản Zalo cẩm nang mở quán, video review máy, voucher giảm 2 triệu để kích thích Sales chốt lại.
+2. **Lấy ra Danh sách "Quán sắp hết hạt cà phê" (Mốc 15 - 20 ngày):** Lọc các quán đã mua hạt quá 15 ngày $\rightarrow$ Tự động gửi tin nhắn Zalo kèm mã ưu đãi freeship hoặc tặng 1kg khi mua thùng 10kg để giữ chân quán, không để mất khách về tay đối thủ.
+3. **Lấy ra Danh sách "Máy pha đã chạy đủ 90 ngày":** Lọc các máy đến hạn 3 tháng $\rightarrow$ Bắn tin nhắn thông báo cử kỹ thuật qua thay gioăng cao su, kiểm tra áp suất boiler miễn phí nhằm tạo sự chuyên nghiệp vượt trội.
+4. **Lấy ra Báo cáo "Hiệu Quả Tiền Quảng Cáo (ROI)":** Xuất bảng đối chiếu: Bỏ 15 triệu chạy Facebook mang về bao nhiêu quán, chốt được bao nhiêu máy pha $\rightarrow$ Báo cáo Sếp duyệt ngân sách tháng tiếp theo.
 
 ---
 
