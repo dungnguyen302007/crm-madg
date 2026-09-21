@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MADG CRM - Hệ Thống Quản Trị Khách Hàng & Bán Hàng F&B</title>
+  <!-- Google Fonts: Be Vietnam Pro & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            madg: {
+              blue: '#0088d6',
+              darkblue: '#00629c',
+              lightblue: '#e0f2fe',
+              orange: '#f58220',
+              darkorange: '#c25e07',
+              lightorange: '#ffedd5',
+              navy: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #f8fafc;
+    }
+    .active-tab {
+      background-color: #e0f2fe;
+      color: #0088d6;
+      font-weight: 600;
+      border-right: 4px solid #0088d6;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(0.95); opacity: 1; }
+    }
+    .pulse-badge {
+      animation: pulse-ring 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="text-slate-800 bg-slate-50 min-h-screen flex flex-col">
+
+  <!-- TOP NOTICE BAR: Dành cho Khách hàng xem thử nghiệm -->
+  <div class="bg-gradient-to-r from-madg-navy via-slate-900 to-madg-navy text-white text-xs py-2 px-4 flex flex-wrap items-center justify-between border-b border-slate-800">
+    <div class="flex items-center gap-2">
+      <span class="bg-madg-orange text-white px-2 py-0.5 rounded font-bold uppercase tracking-wider text-[10px]">Demo Giai Đoạn 1</span>
+      <span>Hệ Thống CRM Chuyên Biệt Cho Doanh Nghiệp Máy Móc & Nguyên Liệu F&B - <strong>MADG</strong></span>
+    </div>
+    <div class="flex items-center gap-4 text-slate-300">
+      <span class="flex items-center gap-1"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Bảo mật đa tầng (RBAC)</span>
+      <span class="flex items-center gap-1"><i data-lucide="bot" class="w-3.5 h-3.5 text-madg-blue"></i> Trợ lý AI MCP</span>
+      <span class="flex items-center gap-1"><i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-emerald-400"></i> Đối chiếu Kho Excel</span>
+      <span class="flex items-center gap-1"><i data-lucide="alarm-clock" class="w-3.5 h-3.5 text-madg-orange"></i> Cảnh báo KPI Nước rút 29</span>
+    </div>
+  </div>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-white border-r border-slate-200 flex flex-col shrink-0">
+      <!-- LOGO MADG -->
+      <div class="p-4 border-b border-slate-100 flex flex-col items-center text-center bg-white">
+        <img src="assets/logo-madg.png" alt="MADG Logo" class="h-16 object-contain mb-1 hover:scale-105 transition-transform" onerror="this.onerror=null; this.src='https://dummyimage.com/200x60/0088d6/ffffff&text=MADG';">
+        <p class="text-[11px] font-semibold tracking-wider text-madg-orange uppercase">Nơi khởi đầu cho những thành công</p>
+      </div>
+
+      <!-- ROLE SIMULATOR (Bộ giả lập phân quyền bảo mật) -->
+      <div class="p-3 mx-3 mt-3 bg-slate-50 border border-slate-200 rounded-xl">
+        <div class="flex items-center justify-between mb-1.5">
+          <span class="text-[11px] font-bold text-slate-500 uppercase flex items-center gap-1">
+            <i data-lucide="user-check" class="w-3.5 h-3.5 text-madg-blue"></i> Xem dưới vai trò:
+          </span>
+          <span id="role-badge" class="text-[10px] px-1.5 py-0.5 rounded font-semibold bg-emerald-100 text-emerald-700">Full Quyền</span>
+        </div>
+        <select id="role-select" onchange="changeRole(this.value)" class="w-full text-xs font-semibold bg-white border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none text-slate-700 cursor-pointer">
+          <option value="admin">👑 Ban Giám Đốc (Thấy toàn bộ, giá vốn, SĐT)</option>
+          <option value="sales">💼 Nhân viên Sales (Chỉ thấy khách mình, Ẩn SĐT)</option>
+          <option value="accountant">📦 Kế toán & Thủ kho (Đối chiếu Kho Excel)</option>
+          <option value="technical">🔧 Kỹ thuật viên (Lịch lắp máy & Bảo dưỡng)</option>
+        </select>
+        <p id="role-desc" class="text-[10px] text-slate-500 mt-1.5 leading-tight">Đang xem chế độ Giám đốc: Thấy đầy đủ số điện thoại khách hàng, xem doanh thu và lợi nhuận giá vốn.</p>
+      </div>
+
+      <!-- NAVIGATION MENU -->
+      <nav class="flex-1 p-3 space-y-1 overflow-y-auto custom-scrollbar">
+        <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1">Phân hệ Giai đoạn 1</div>
+
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition active-tab">
+          <i data-lucide="layout-dashboard" class="w-4 h-4 text-madg-blue"></i>
+          <span class="flex-1 text-left">Dashboard & Cảnh Báo KPI 29</span>
+          <span class="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.2 rounded-full pulse-badge">29</span>
+        </button>
+
+        <button onclick="switchTab('customers')" id="nav-customers" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
+          <i data-lucide="coffee" class="w-4 h-4 text-madg-orange"></i>
+          <span class="flex-1 text-left">Quản Lý Khách F&B & Chống Trùng</span>
+          <span class="bg-slate-100 text-slate-600 text-[10px] font-semibold px-1.5 py-0.5 rounded">6 Quán</span>
+        </button>
+
+        <button onclick="switchTab('ai-mcp')" id="nav-ai-mcp" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
+          <i data-lucide="bot" class="w-4 h-4 text-madg-blue"></i>
+          <span class="flex-1 text-left">Trợ Lý AI MCP (Ra lệnh giọng nói)</span>
+          <span class="bg-madg-lightorange text-madg-darkorange text-[10px] font-bold px-1.5 py-0.5 rounded">HOT</span>
+        </button>
+
+        <button onclick="switchTab('inventory')" id="nav-inventory" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
+          <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
+          <span class="flex-1 text-left">Đối Chiếu Kho Excel (Kế toán)</span>
+          <span class="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-1.5 py-0.5 rounded">Diff Sync</span>
+        </button>
+
+        <button onclick="switchTab('marketing')" id="nav-marketing" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 transition">
+          <i data-lucide="repeat" class="w-4 h-4 text-purple-600"></i>
+          <span class="flex-1 text-left">Nhắc Mua Hạt & Bảo Dưỡng Máy</span>
+          <span class="bg-purple-50 text-purple-700 text-[10px] font-semibold px-1.5 py-0.5 rounded">Tự động</span>
+        </button>
+
+        <div class="pt-4 text-[10px] font-bold uppercase tracking-wider text-slate-400 px-3 py-1">Lộ trình Giai đoạn tiếp theo</div>
+        <div class="px-3 py-2 text-xs text-slate-400 flex items-center gap-2 cursor-not-allowed">
+          <i data-lucide="users" class="w-4 h-4"></i> Giai đoạn 2: Nhân sự & Chấm công
+        </div>
+        <div class="px-3 py-2 text-xs text-slate-400 flex items-center gap-2 cursor-not-allowed">
+          <i data-lucide="wallet" class="w-4 h-4"></i> Giai đoạn 3: Tài chính & Sổ quỹ
+        </div>
+      </nav>
+
+      <!-- USER FOOTER -->
+      <div class="p-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-full bg-madg-blue text-white flex items-center justify-center font-bold text-xs">
+            M
+          </div>
+          <div>
+            <p id="footer-username" class="text-xs font-bold text-slate-800">Ban Giám Đốc</p>
+            <p id="footer-userrole" class="text-[10px] text-slate-500">Toàn quyền hệ thống</p>
+          </div>
+        </div>
+        <span class="inline-block w-2.5 h-2.5 bg-emerald-500 rounded-full ring-4 ring-emerald-100" title="Online"></span>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col overflow-y-auto custom-scrollbar">
+      
+      <!-- TOP HEADER -->
+      <header class="bg-white border-b border-slate-200 py-3.5 px-6 flex items-center justify-between sticky top-0 z-10">
+        <div>
+          <h1 id="page-title" class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+            <i data-lucide="layout-dashboard" class="w-5 h-5 text-madg-blue"></i>
+            Tổng Quan Điều Hành & Cảnh Báo Nước Rút Ngày 29
+          </h1>
+          <p id="page-subtitle" class="text-xs text-slate-500">Giám sát doanh số thiết bị, nguyên vật liệu F&B và rà soát KPI nhân sự trước kỳ chốt lương 30 hàng tháng.</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <!-- Live Date Badge -->
+          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-xs text-slate-700 font-medium">
+            <i data-lucide="calendar" class="w-3.5 h-3.5 text-madg-orange"></i>
+            <span>Hôm nay: <strong>29/09/2026</strong> (Kỳ chốt số)</span>
+          </div>
+          <!-- Quick Action Button -->
+          <button onclick="openAddCustomerModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-madg-blue hover:bg-madg-darkblue text-white text-xs font-semibold shadow-sm transition">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i> Thêm Khách Hàng F&B
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: DASHBOARD & CẢNH BÁO KPI NGÀY 29 -->
+      <div id="view-dashboard" class="p-6 space-y-6">
+        
+        <!-- RED BANNER: CẢNH BÁO NƯỚC RÚT NGÀY 29 -->
+        <div class="bg-gradient-to-r from-red-600 via-rose-600 to-madg-orange rounded-2xl p-4 text-white shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div class="flex items-start gap-3.5">
+            <div class="p-3 bg-white/20 rounded-xl shrink-0">
+              <i data-lucide="alert-triangle" class="w-6 h-6 text-yellow-300"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="bg-yellow-400 text-slate-900 text-[10px] font-extrabold uppercase px-2 py-0.5 rounded">Cảnh báo hệ thống ngày 29</span>
+                <h3 class="font-bold text-sm md:text-base">NƯỚC RÚT CHỐT DOANH SỐ THÁNG: CÒN 24H TRƯỚC KHI KHÓA SỔ (23:59 NGÀY 30/09)</h3>
+              </div>
+              <p class="text-xs text-red-100 mt-1">
+                Phát hiện <strong>1 nhân sự</strong> có nguy cơ rớt KPI sàn (< 70%) và <strong>1 nhân sự</strong> chỉ thiếu <strong>12.500.000đ</strong> để chạm mốc thưởng hoa hồng bậc 2!
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button onclick="switchTab('customers')" class="px-3.5 py-2 bg-white text-red-600 hover:bg-red-50 text-xs font-bold rounded-lg shadow transition flex items-center gap-1.5">
+              <i data-lucide="zap" class="w-3.5 h-3.5"></i> Xem Danh Sách Deal Chốt Gấp
+            </button>
+          </div>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <!-- Card 1 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-semibold">Doanh số Máy & Thiết bị</span>
+              <div class="p-2 rounded-lg bg-sky-50 text-madg-blue"><i data-lucide="coffee" class="w-4 h-4"></i></div>
+            </div>
+            <div class="text-xl font-black text-slate-900">485.000.000 đ</div>
+            <div class="flex items-center gap-1.5 text-[11px] text-emerald-600 mt-1">
+              <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +18% so với tháng trước (14 máy pha/xay)
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-semibold">Doanh số Hạt & Nguyên liệu</span>
+              <div class="p-2 rounded-lg bg-amber-50 text-madg-orange"><i data-lucide="package" class="w-4 h-4"></i></div>
+            </div>
+            <div class="text-xl font-black text-slate-900">128.400.000 đ</div>
+            <div class="flex items-center gap-1.5 text-[11px] text-emerald-600 mt-1">
+              <i data-lucide="repeat" class="w-3.5 h-3.5"></i> 640 kg hạt cà phê mua lặp lại định kỳ
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-semibold">Quán F&B Mới Tiếp Cận</span>
+              <div class="p-2 rounded-lg bg-purple-50 text-purple-600"><i data-lucide="store" class="w-4 h-4"></i></div>
+            </div>
+            <div class="text-xl font-black text-slate-900">28 Quán</div>
+            <div class="flex items-center gap-1.5 text-[11px] text-sky-600 mt-1">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i> 100% đã được kiểm tra chống trùng
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center justify-between text-slate-500 mb-2">
+              <span class="text-xs font-semibold">Tiến độ KPI Toàn Công Ty</span>
+              <div class="p-2 rounded-lg bg-emerald-50 text-emerald-600"><i data-lucide="target" class="w-4 h-4"></i></div>
+            </div>
+            <div class="text-xl font-black text-slate-900">92.4%</div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2">
+              <div class="bg-emerald-500 h-1.5 rounded-full" style="width: 92.4%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI MONITORING & SALES PRE-WARNING TABLE -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i data-lucide="alarm-clock" class="w-5 h-5 text-red-500"></i>
+              <h3 class="font-bold text-sm text-slate-800">Bảng Giám Sát Hiệu Suất & Cảnh Báo Nhân Sự (Cập nhật Ngày 29/09)</h3>
+            </div>
+            <span class="text-xs text-slate-500">Chu kỳ lương: Chốt ngày 30 - Phát lương ngày 10</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="py-3 px-4">Nhân Viên Kinh Doanh</th>
+                  <th class="py-3 px-4">Chỉ Tiêu Tháng (KPI)</th>
+                  <th class="py-3 px-4">Đã Đạt Đến Ngày 29</th>
+                  <th class="py-3 px-4">% Hoàn Thành</th>
+                  <th class="py-3 px-4">Tình Trạng Ngày 29</th>
+                  <th class="py-3 px-4">Hành Động Khuyến Nghị Cho Sếp</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <!-- Sale 1: Vượt KPI -->
+                <tr class="hover:bg-slate-50">
+                  <td class="py-3 px-4 font-semibold text-slate-800 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">TN</div>
+                    <div>
+                      <p>Trần Nhật Nam</p>
+                      <p class="text-[10px] text-slate-400 font-normal">Khu vực: TP.HCM & Bình Dương</p>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-medium">180.000.000 đ</td>
+                  <td class="py-3 px-4 font-bold text-emerald-600">215.000.000 đ</td>
+                  <td class="py-3 px-4">
+                    <span class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-700">119% (Xuất sắc)</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="flex items-center gap-1 text-emerald-600 font-semibold"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Vượt mốc thưởng bậc 1</span>
+                  </td>
+                  <td class="py-3 px-4 text-slate-600">Đã chốt xong 2 máy Faema E98. Duy trì chăm sóc hạt cà phê.</td>
+                </tr>
+
+                <!-- Sale 2: Sát nút cần đẩy -->
+                <tr class="hover:bg-slate-50 bg-amber-50/40">
+                  <td class="py-3 px-4 font-semibold text-slate-800 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold">AT</div>
+                    <div>
+                      <p>Bùi Anh Tuấn</p>
+                      <p class="text-[10px] text-slate-400 font-normal">Khu vực: Hà Nội & Lân Cận</p>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-medium">150.000.000 đ</td>
+                  <td class="py-3 px-4 font-bold text-amber-600">137.500.000 đ</td>
+                  <td class="py-3 px-4">
+                    <span class="px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">91.6% (Thiếu 12.5tr)</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="flex items-center gap-1 text-amber-600 font-bold"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> Cơ hội nhảy bậc thưởng</span>
+                  </td>
+                  <td class="py-3 px-4 text-amber-800 font-medium">
+                    🔥 <strong>Gợi ý:</strong> Có quán The Coffee Tree đang chờ lấy thêm 50kg cà phê hạt + 1 máy ép chậm (Tổng 15 triệu). Hỗ trợ chốt ngay trong 24h!
+                  </td>
+                </tr>
+
+                <!-- Sale 3: Nguy cơ rớt KPI -->
+                <tr class="hover:bg-slate-50 bg-red-50/40">
+                  <td class="py-3 px-4 font-semibold text-slate-800 flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold">HL</div>
+                    <div>
+                      <p>Lê Hoàng Long</p>
+                      <p class="text-[10px] text-slate-400 font-normal">Khu vực: Miền Trung (Đà Nẵng)</p>
+                    </div>
+                  </td>
+                  <td class="py-3 px-4 font-medium">140.000.000 đ</td>
+                  <td class="py-3 px-4 font-bold text-red-600">82.000.000 đ</td>
+                  <td class="py-3 px-4">
+                    <span class="px-2 py-0.5 rounded font-bold bg-red-100 text-red-700">58.5% (Nguy cơ rớt)</span>
+                  </td>
+                  <td class="py-3 px-4">
+                    <span class="flex items-center gap-1 text-red-600 font-bold"><i data-lucide="shield-alert" class="w-3.5 h-3.5"></i> Cảnh báo đỏ ngày 29</span>
+                  </td>
+                  <td class="py-3 px-4 text-red-700">
+                    Trưởng phòng cần họp khẩn: Kích hoạt gọi lại 4 quán đang hẹn demo máy Casadio để thúc đẩy đặt cọc giữ khuyến mãi tháng 9.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- CHARTS: CƠ CẤU DOANH SỐ F&B -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <i data-lucide="bar-chart-3" class="w-4 h-4 text-madg-blue"></i> Tỷ Trọng Doanh Thu: Thiết Bị Cao Cấp vs Hạt Tiêu Hao Định Kỳ
+            </h4>
+            <div class="h-64 flex items-center justify-center">
+              <canvas id="revenueChart"></canvas>
+            </div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <h4 class="text-xs font-bold text-slate-700 mb-3 flex items-center gap-2">
+              <i data-lucide="pie-chart" class="w-4 h-4 text-madg-orange"></i> Phân Bổ Mô Hình Quán Khách Hàng F&B
+            </h4>
+            <div class="h-64 flex items-center justify-center">
+              <canvas id="cafeTypeChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VIEW 2: QUẢN LÝ KHÁCH HÀNG & CHỐNG TRÙNG LẶP -->
+      <div id="view-customers" class="p-6 space-y-6 hidden">
+        
+        <!-- HEADER & FILTER -->
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="relative">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+              <input type="text" placeholder="Tìm tên quán, SĐT, dòng máy..." class="pl-9 pr-4 py-2 text-xs border border-slate-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-madg-blue">
+            </div>
+            <select class="text-xs border border-slate-200 rounded-lg px-3 py-2 bg-white text-slate-600 focus:outline-none">
+              <option>Tất cả mô hình quán</option>
+              <option>Quán cà phê chuẩn bị mở</option>
+              <option>Specialty Coffee</option>
+              <option>Chuỗi nhượng quyền</option>
+            </select>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <!-- Test Trùng Lặp Demo Button -->
+            <button onclick="simulateDuplicateCheck()" class="px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-madg-darkorange border border-amber-200 text-xs font-bold rounded-lg transition flex items-center gap-1.5">
+              <i data-lucide="alert-octagon" class="w-3.5 h-3.5"></i> Thử Nghiệm Bắn Cảnh Báo Trùng Khách
+            </button>
+            <button onclick="openAddCustomerModal()" class="px-3.5 py-2 bg-madg-blue hover:bg-madg-darkblue text-white text-xs font-semibold rounded-lg shadow transition flex items-center gap-1.5">
+              <i data-lucide="plus" class="w-3.5 h-3.5"></i> Thêm Khách Hàng Mới
+            </button>
+          </div>
+        </div>
+
+        <!-- SECURITY NOTICE BANNER -->
+        <div id="security-notice" class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-blue-900 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i data-lucide="shield" class="w-4 h-4 text-madg-blue"></i>
+            <span id="security-notice-text">Chế độ <strong>Ban Giám Đốc</strong>: Hiển thị đầy đủ số điện thoại và thông tin liên hệ của chủ quán.</span>
+          </div>
+          <span class="text-[11px] font-semibold text-blue-700">Quy tắc bảo mật chống lộ Data</span>
+        </div>
+
+        <!-- CUSTOMERS TABLE -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left" id="customer-table">
+              <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="py-3 px-4">Tên Quán & Chủ Sở Hữu</th>
+                  <th class="py-3 px-4">Số Điện Thoại (Bảo mật)</th>
+                  <th class="py-3 px-4">Địa Chỉ Quán</th>
+                  <th class="py-3 px-4">Mô Hình / Thiết Bị Sở Hữu</th>
+                  <th class="py-3 px-4">Mức Tiêu Thụ Hạt</th>
+                  <th class="py-3 px-4">Sale Phụ Trách</th>
+                  <th class="py-3 px-4">Trạng Thái</th>
+                  <th class="py-3 px-4 text-right">Thao Tác</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100" id="customer-table-body">
+                <!-- Data populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VIEW 3: TRỢ LÝ AI MCP (RA LỆNH GIỌNG NÓI / CHAT TỰ ĐỘNG) -->
+      <div id="view-ai-mcp" class="p-6 space-y-6 hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- LEFT: INTRO & EXAMPLE PROMPTS -->
+          <div class="space-y-4">
+            <div class="bg-gradient-to-br from-madg-navy to-slate-800 text-white p-5 rounded-2xl shadow-sm">
+              <div class="flex items-center gap-2 text-madg-orange mb-2 font-bold text-xs">
+                <i data-lucide="sparkles" class="w-4 h-4"></i> CÔNG NGHỆ MODEL CONTEXT PROTOCOL (MCP)
+              </div>
+              <h3 class="font-extrabold text-base mb-2">Trợ Lý AI Tự Động Hóa CRM</h3>
+              <p class="text-xs text-slate-300 leading-relaxed">
+                Nhân viên Sales hoặc Sếp <strong>không cần phải mở giao diện CRM đăng nhập phức tạp</strong>. Chỉ cần gõ hoặc đọc câu lệnh tự nhiên cho AI, hệ thống MCP sẽ tự trích xuất thông tin, kiểm tra trùng lặp và tạo đơn hàng/khách hàng tức thì.
+              </p>
+            </div>
+
+            <!-- PRESET PROMPTS -->
+            <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+              <h4 class="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                <i data-lucide="mouse-pointer-click" class="w-4 h-4 text-madg-blue"></i> Bấm để thử câu lệnh mẫu:
+              </h4>
+
+              <button onclick="runMcpDemo(1)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-madg-blue hover:bg-sky-50/50 transition text-xs group">
+                <div class="font-semibold text-slate-800 group-hover:text-madg-blue flex items-center justify-between">
+                  <span>1. Ra lệnh thêm khách & Deal máy mới</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition"></i>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1 italic">"Thêm khách anh Hùng chủ quán Retro Cafe ở số 12 đường 3/2 Q10, SĐT 0987654321, đang hỏi máy pha Expobar 35 triệu và 5kg hạt Robusta"</p>
+              </button>
+
+              <button onclick="runMcpDemo(2)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-red-400 hover:bg-red-50/50 transition text-xs group">
+                <div class="font-semibold text-slate-800 group-hover:text-red-600 flex items-center justify-between">
+                  <span>2. Thử ra lệnh nhưng dính khách trùng</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition"></i>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1 italic">"Nhập cho anh quán The Coffee Tree số 0903123456 hỏi lấy thêm máy xay"</p>
+              </button>
+
+              <button onclick="runMcpDemo(3)" class="w-full text-left p-3 rounded-xl border border-slate-200 hover:border-purple-400 hover:bg-purple-50/50 transition text-xs group">
+                <div class="font-semibold text-slate-800 group-hover:text-purple-600 flex items-center justify-between">
+                  <span>3. Tra cứu nhanh lịch sử mua & bảo hành</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition"></i>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1 italic">"Quán Tiệm Cà Phê Mùa Thu đã mua những máy gì, khi nào đến hạn bảo dưỡng?"</p>
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT: AI CHAT & TOOL EXECUTION SIMULATION -->
+          <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[560px] overflow-hidden">
+            <!-- Chat Header -->
+            <div class="p-3.5 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-madg-blue to-cyan-400 text-white flex items-center justify-center font-bold">
+                  <i data-lucide="bot" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-slate-800">MADG F&B AI Agent (Tích hợp MCP Server)</h4>
+                  <p class="text-[10px] text-emerald-600 flex items-center gap-1 font-medium">
+                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-ping"></span> Sẵn sàng kết nối Database CRM
+                  </p>
+                </div>
+              </div>
+              <button onclick="clearChat()" class="text-slate-400 hover:text-slate-600 text-xs flex items-center gap-1">
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Xóa hội thoại
+              </button>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 custom-scrollbar text-xs">
+              <!-- Default Welcome Message -->
+              <div class="flex items-start gap-2.5 max-w-[85%]">
+                <div class="w-6 h-6 rounded-full bg-madg-blue text-white flex items-center justify-center shrink-0 text-[10px] font-bold">AI</div>
+                <div class="p-3 bg-slate-100 rounded-2xl rounded-tl-none text-slate-700 leading-relaxed">
+                  Xin chào Sếp và Anh/Chị Sales! Em là Trợ lý AI kết nối qua giao thức **MCP** của MADG CRM.<br>
+                  Anh/Chị chỉ cần đọc tên khách hàng, số điện thoại, dòng máy muốn mua hoặc hỏi tình trạng kho, em sẽ tự động kiểm tra trùng lặp và ghi vào hệ thống ngay lập tức.
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat Input Form -->
+            <div class="p-3 border-t border-slate-200 bg-slate-50 flex items-center gap-2">
+              <button class="p-2.5 text-slate-500 hover:text-madg-orange rounded-lg hover:bg-white transition" title="Nói qua Micro">
+                <i data-lucide="mic" class="w-4 h-4"></i>
+              </button>
+              <input id="chat-input" type="text" placeholder="Nhập câu lệnh tự nhiên (ví dụ: Thêm khách anh Tuấn lấy 1 máy pha Faema...)" class="flex-1 text-xs border border-slate-300 rounded-xl px-3.5 py-2.5 bg-white focus:outline-none focus:ring-2 focus:ring-madg-blue" onkeydown="if(event.key==='Enter') sendCustomChat()">
+              <button onclick="sendCustomChat()" class="px-4 py-2.5 bg-madg-blue hover:bg-madg-darkblue text-white font-bold text-xs rounded-xl shadow transition flex items-center gap-1">
+                <span>Gửi</span> <i data-lucide="send" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- VIEW 4: ĐỐI CHIẾU KHO EXCEL (KẾ TOÁN & THỦ KHO) -->
+      <div id="view-inventory" class="p-6 space-y-6 hidden">
+        
+        <!-- INTRO & UPLOAD BOX -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+          <div>
+            <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Tính năng Kế toán - Kho</span>
+            <h3 class="text-sm md:text-base font-extrabold text-slate-900 mt-1">Đối Chiếu & Cập Nhật Kho Bằng File Excel (Diff & Sync Engine)</h3>
+            <p class="text-xs text-slate-500 mt-0.5">Kế toán tải file Excel tồn kho mới lên. Hệ thống tự so sánh với Database hiện tại và hiển thị chênh lệch trước khi ghi nhận.</p>
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            <button onclick="simulateExcelUpload()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow transition flex items-center gap-2">
+              <i data-lucide="file-up" class="w-4 h-4"></i> Giả Lập Tải File Excel Ngày 29/09 Lên
+            </button>
+          </div>
+        </div>
+
+        <!-- DIFF PREVIEW CONTAINER -->
+        <div id="excel-diff-container" class="space-y-4">
+          
+          <!-- Summary Badges -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-semibold text-emerald-800">Sản Phẩm Mới Phát Hiện</p>
+                <p class="text-lg font-black text-emerald-700 mt-0.5">+ 2 Thiết Bị Mới</p>
+              </div>
+              <div class="p-2 rounded-lg bg-emerald-100 text-emerald-700"><i data-lucide="plus-circle" class="w-5 h-5"></i></div>
+            </div>
+
+            <div class="p-3.5 bg-amber-50 border border-amber-200 rounded-xl flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-semibold text-amber-800">Sản Phẩm Thay Đổi Tồn/Giá</p>
+                <p class="text-lg font-black text-amber-700 mt-0.5">3 Mặt Hàng Cập Nhật</p>
+              </div>
+              <div class="p-2 rounded-lg bg-amber-100 text-amber-700"><i data-lucide="refresh-cw" class="w-5 h-5"></i></div>
+            </div>
+
+            <div class="p-3.5 bg-red-50 border border-red-200 rounded-xl flex items-center justify-between">
+              <div>
+                <p class="text-[11px] font-semibold text-red-800">Dữ Liệu Bất Thường / Lỗi</p>
+                <p class="text-lg font-black text-red-700 mt-0.5">1 Cảnh Báo Âm Kho</p>
+              </div>
+              <div class="p-2 rounded-lg bg-red-100 text-red-700"><i data-lucide="alert-triangle" class="w-5 h-5"></i></div>
+            </div>
+          </div>
+
+          <!-- COMPARISON TABLE -->
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+              <h4 class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="git-compare" class="w-4 h-4 text-emerald-600"></i> Bảng Đối Chiếu So Khớp (Database Hiện Tại vs File Excel Mới Tải)
+              </h4>
+              <button onclick="approveSync()" class="px-3.5 py-1.5 bg-madg-blue hover:bg-madg-darkblue text-white text-xs font-bold rounded-lg shadow transition flex items-center gap-1">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> Duyệt & Đồng Bộ Vào Hệ Thống
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-xs text-left">
+                <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="py-2.5 px-4">Mã SKU</th>
+                    <th class="py-2.5 px-4">Tên Sản Phẩm / Thiết Bị</th>
+                    <th class="py-2.5 px-4">Tồn Kho Cũ (DB)</th>
+                    <th class="py-2.5 px-4">Tồn Kho File Mới</th>
+                    <th class="py-2.5 px-4">Giá Niêm Yết (VND)</th>
+                    <th class="py-2.5 px-4">Kết Quả Phân Tích</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <!-- Row 1: Mới -->
+                  <tr class="bg-emerald-50/50">
+                    <td class="py-3 px-4 font-mono font-bold text-slate-800">CASADIO-UNDICI-A1</td>
+                    <td class="py-3 px-4 font-semibold text-slate-800">Máy pha cà phê Casadio Undici A1 (1 Group)</td>
+                    <td class="py-3 px-4 text-slate-400">0 (Chưa có)</td>
+                    <td class="py-3 px-4 font-bold text-emerald-700">4 máy</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">52.000.000 đ</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 rounded font-bold bg-emerald-100 text-emerald-800">[MỚI] Tự động tạo sản phẩm</span>
+                    </td>
+                  </tr>
+
+                  <!-- Row 2: Cập nhật tồn kho -->
+                  <tr class="bg-amber-50/40">
+                    <td class="py-3 px-4 font-mono font-bold text-slate-800">FAEMA-E98-AUTO</td>
+                    <td class="py-3 px-4 font-semibold text-slate-800">Máy pha cà phê Faema E98 Auto (2 Group)</td>
+                    <td class="py-3 px-4 text-slate-600">2 máy</td>
+                    <td class="py-3 px-4 font-bold text-amber-700">7 máy (+5 máy)</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">82.000.000 đ</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">[CẬP NHẬT] Tăng tồn kho</span>
+                    </td>
+                  </tr>
+
+                  <!-- Row 3: Hạt cà phê -->
+                  <tr class="bg-amber-50/40">
+                    <td class="py-3 px-4 font-mono font-bold text-slate-800">COFFEE-ROBUSTA-GU</td>
+                    <td class="py-3 px-4 font-semibold text-slate-800">Cà phê hạt Mộc Gu Đậm (Bao 1kg)</td>
+                    <td class="py-3 px-4 text-slate-600">45 kg</td>
+                    <td class="py-3 px-4 font-bold text-amber-700">300 kg (+255 kg)</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">220.000 đ/kg</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">[CẬP NHẬT] Nhập kho mẻ mới</span>
+                    </td>
+                  </tr>
+
+                  <!-- Row 4: Lỗi cảnh báo âm kho -->
+                  <tr class="bg-red-50/60">
+                    <td class="py-3 px-4 font-mono font-bold text-red-800">FIOREN-F64E</td>
+                    <td class="py-3 px-4 font-semibold text-red-900">Máy xay cà phê tự động Fiorenzato F64E</td>
+                    <td class="py-3 px-4 text-slate-600">3 máy</td>
+                    <td class="py-3 px-4 font-bold text-red-600">-1 máy (Sai lệch)</td>
+                    <td class="py-3 px-4 font-bold text-slate-800">18.500.000 đ</td>
+                    <td class="py-3 px-4">
+                      <span class="px-2 py-0.5 rounded font-bold bg-red-100 text-red-800">[CẢNH BÁO] Số liệu tồn âm, cần kiểm lại</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VIEW 5: MARKETING TỰ ĐỘNG & BẢO DƯỠNG MÁY -->
+      <div id="view-marketing" class="p-6 space-y-6 hidden">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- BLOCK 1: NHẮC TÁI MUA NGUYÊN LIỆU (HẠT CÀ PHÊ) -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="p-2 rounded-lg bg-amber-100 text-madg-orange"><i data-lucide="repeat" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-900">Chu Kỳ Tiếp Tế Hạt Cà Phê (15 - 20 ngày)</h3>
+                  <p class="text-[11px] text-slate-500">Tự động phát hiện quán sắp cạn nguyên liệu để gợi ý Sales gọi lại.</p>
+                </div>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-amber-50 text-madg-darkorange">3 Quán Sắp Hết</span>
+            </div>
+
+            <div class="space-y-3">
+              <!-- Item 1 -->
+              <div class="p-3 rounded-xl border border-amber-200 bg-amber-50/50 flex items-start justify-between">
+                <div>
+                  <p class="font-bold text-slate-800 text-xs">Highlands Nhượng Quyền Q1</p>
+                  <p class="text-[11px] text-slate-500">Lấy 30kg Robusta từ ngày 12/09 (Đã dùng 17 ngày)</p>
+                  <p class="text-[11px] text-madg-orange font-semibold mt-1">Dự kiến chỉ còn dùng được 2 - 3 ngày nữa</p>
+                </div>
+                <button onclick="sendZaloReminder('Highlands Q1')" class="px-2.5 py-1 bg-madg-orange hover:bg-madg-darkorange text-white text-[11px] font-bold rounded-lg transition flex items-center gap-1">
+                  <i data-lucide="message-circle" class="w-3 h-3"></i> Nhắn Zalo
+                </button>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="p-3 rounded-xl border border-slate-200 bg-white flex items-start justify-between">
+                <div>
+                  <p class="font-bold text-slate-800 text-xs">Tiệm Cà Phê Mùa Thu (Cầu Giấy)</p>
+                  <p class="text-[11px] text-slate-500">Lấy 15kg Arabica từ ngày 15/09 (Đã dùng 14 ngày)</p>
+                  <p class="text-[11px] text-slate-600 font-semibold mt-1">Dự kiến còn 5 ngày nữa</p>
+                </div>
+                <button onclick="sendZaloReminder('Tiệm Cà Phê Mùa Thu')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold rounded-lg transition flex items-center gap-1">
+                  <i data-lucide="bell" class="w-3 h-3"></i> Lên Lịch Nhắc
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- BLOCK 2: LỊCH BẢO DƯỠNG MÁY PHA ĐỊNH KỲ 90 NGÀY -->
+          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="p-2 rounded-lg bg-sky-100 text-madg-blue"><i data-lucide="wrench" class="w-5 h-5"></i></div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-900">Bảo Dưỡng Máy Định Kỳ (90 Ngày)</h3>
+                  <p class="text-[11px] text-slate-500">Nhắc thay gioăng cao su, van xả áp và tẩy cặn canxi boiler.</p>
+                </div>
+              </div>
+              <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-sky-50 text-madg-blue">2 Máy Đến Hạn</span>
+            </div>
+
+            <div class="space-y-3">
+              <!-- Item 1 -->
+              <div class="p-3 rounded-xl border border-sky-200 bg-sky-50/40 flex items-start justify-between">
+                <div>
+                  <p class="font-bold text-slate-800 text-xs">The Coffee Tree (Q. Phú Nhuận)</p>
+                  <p class="text-[11px] text-slate-500">Máy pha: Faema E98 Auto (Serial: FM-2026-88)</p>
+                  <p class="text-[11px] text-red-600 font-bold mt-1">Đã chạy 94 ngày (Quá hạn 4 ngày)</p>
+                </div>
+                <button onclick="alert('Đã gửi thông báo giao task cho Kỹ thuật viên Nguyễn Văn Bình tới bảo trì máy!')" class="px-2.5 py-1 bg-madg-blue hover:bg-madg-darkblue text-white text-[11px] font-bold rounded-lg transition flex items-center gap-1">
+                  <i data-lucide="calendar-plus" class="w-3 h-3"></i> Cử Kỹ Thuật
+                </button>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="p-3 rounded-xl border border-slate-200 bg-white flex items-start justify-between">
+                <div>
+                  <p class="font-bold text-slate-800 text-xs">An Cafe & Bakery (Hà Đông)</p>
+                  <p class="text-[11px] text-slate-500">Máy pha: Nuova Simonelli Appia II</p>
+                  <p class="text-[11px] text-sky-700 font-semibold mt-1">Còn 6 ngày nữa đến hạn 90 ngày</p>
+                </div>
+                <button class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold rounded-lg transition">
+                  Chi Tiết Máy
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: CẢNH BÁO TRÙNG LẶP KHÁCH HÀNG (ANTI-DUPLICATION) -->
+  <div id="duplicate-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-red-200 space-y-4 animate-in fade-in zoom-in duration-200">
+      <div class="flex items-center gap-3 text-red-600">
+        <div class="p-3 bg-red-100 rounded-full shrink-0">
+          <i data-lucide="shield-alert" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-sm text-slate-900">PHÁT HIỆN TRÙNG LẶP KHÁCH HÀNG!</h3>
+          <p class="text-[11px] text-red-600 font-semibold">Thuật toán chống gian lận & tranh chấp Lead</p>
+        </div>
+      </div>
+
+      <div class="p-3.5 bg-red-50 rounded-xl border border-red-200 text-xs space-y-2 text-slate-700">
+        <div class="flex justify-between">
+          <span class="text-slate-500">Quán trùng lặp:</span>
+          <strong class="text-slate-900" id="dup-cafe-name">The Coffee Tree</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Số điện thoại:</span>
+          <strong class="text-red-700" id="dup-phone">0903 123 456</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Nhân sự phụ trách:</span>
+          <strong class="text-blue-700" id="dup-owner">Trần Nhật Nam (Đã phụ trách từ 12/08/2026)</strong>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500">Trạng thái hiện tại:</span>
+          <span class="px-2 py-0.5 rounded font-bold bg-amber-100 text-amber-800">Đã chốt máy Faema, đang tái mua hạt</span>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-500 leading-relaxed">
+        Hệ thống không cho phép tạo khách hàng mới với số điện thoại hoặc tên quán đã có trong kho dữ liệu. Bạn có thể yêu cầu Trưởng phòng bàn giao hoặc hỗ trợ Sale phụ trách.
+      </p>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button onclick="closeDuplicateModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+          Đã Hiểu & Đóng
+        </button>
+        <button onclick="alert('Đã gửi yêu cầu bàn giao tới Trưởng phòng!')" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow transition">
+          Gửi Yêu Cầu Bàn Giao
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: THÊM KHÁCH HÀNG MỚI (FORM) -->
+  <div id="add-customer-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="font-extrabold text-sm text-slate-900 flex items-center gap-2">
+          <i data-lucide="store" class="w-4 h-4 text-madg-blue"></i> Thêm Khách Hàng Quán F&B Mới
+        </h3>
+        <button onclick="closeAddCustomerModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-4 h-4"></i></button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Tên Chủ Quán / Người đại diện *</label>
+            <input id="input-owner" type="text" placeholder="Ví dụ: Anh Hoàng" class="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Số Điện Thoại *</label>
+            <input id="input-phone" type="text" placeholder="Ví dụ: 0988123456" class="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Tên Thương Hiệu Quán *</label>
+            <input id="input-cafe" type="text" placeholder="Ví dụ: Cà Phê Ban Mê" class="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Mô Hình Quán</label>
+            <select id="input-type" class="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none">
+              <option>Quán cà phê chuẩn bị mở (Setup mới)</option>
+              <option>Specialty Coffee</option>
+              <option>Trà sữa & Đồ uống</option>
+              <option>Chuỗi F&B nhượng quyền</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-700 block mb-1">Địa Chỉ Mặt Bằng Quán</label>
+          <input id="input-address" type="text" placeholder="Ví dụ: 128 Nguyễn Trãi, P. Bến Thành, Q.1, TP.HCM" class="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Thiết Bị Quan Tâm / Báo Giá</label>
+            <input id="input-hardware" type="text" placeholder="Ví dụ: Combo Faema E98 + Máy xay" class="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none">
+          </div>
+          <div>
+            <label class="font-bold text-slate-700 block mb-1">Nhân Viên Phụ Trách</label>
+            <select id="input-assigned" class="w-full border border-slate-200 rounded-lg p-2 focus:ring-2 focus:ring-madg-blue focus:outline-none">
+              <option>Trần Nhật Nam (TP.HCM)</option>
+              <option>Bùi Anh Tuấn (Hà Nội)</option>
+              <option>Lê Hoàng Long (Đà Nẵng)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
+        <button onclick="closeAddCustomerModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition">
+          Hủy
+        </button>
+        <button onclick="submitNewCustomer()" class="px-4 py-2 bg-madg-blue hover:bg-madg-darkblue text-white font-bold text-xs rounded-xl shadow transition">
+          Lưu Vào CRM (Kiểm Tra Trùng Tự Động)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // INITIAL DATA FOR CUSTOMERS
+    let currentRole = 'admin';
+    let customersData = [
+      {
+        id: 1,
+        cafe: 'The Coffee Tree',
+        owner: 'Anh Hoàng Văn Tuấn',
+        phone: '0903123456',
+        address: '45 Phan Xích Long, Q. Phú Nhuận, TP.HCM',
+        type: 'Quán cà phê Specialty',
+        machine: 'Faema E98 Auto 2 Group',
+        beanUsage: '35 kg/tháng',
+        sale: 'Trần Nhật Nam',
+        status: 'Đang dùng máy, lấy hạt đều',
+        badgeColor: 'bg-emerald-100 text-emerald-800'
+      },
+      {
+        id: 2,
+        cafe: 'Tiệm Cà Phê Mùa Thu',
+        owner: 'Chị Mai Lan',
+        phone: '0988776655',
+        address: '12 Cầu Giấy, Q. Cầu Giấy, Hà Nội',
+        type: 'Quán chuẩn bị mở (Khai trương 15/10)',
+        machine: 'Casadio Undici A1 + Fiorenzato',
+        beanUsage: 'Dự kiến 20 kg/tháng',
+        sale: 'Bùi Anh Tuấn',
+        status: 'Đã cọc 30%, chờ giao máy',
+        badgeColor: 'bg-sky-100 text-sky-800'
+      },
+      {
+        id: 3,
+        cafe: 'Retro Coffee House',
+        owner: 'Anh Hùng',
+        phone: '0912345678',
+        address: '12 Đường 3/2, P.12, Q.10, TP.HCM',
+        type: 'Quán phong cách cổ điển',
+        machine: 'Quan tâm Expobar 1 Group',
+        beanUsage: 'Dự kiến 15 kg/tháng',
+        sale: 'Trần Nhật Nam',
+        status: 'Đang gửi báo giá Combo',
+        badgeColor: 'bg-amber-100 text-amber-800'
+      },
+      {
+        id: 4,
+        cafe: 'Highlands Nhượng Quyền Q1',
+        owner: 'Nguyễn Tấn Đạt',
+        phone: '0909888999',
+        address: '88 Nguyễn Du, P. Bến Nghé, Q.1, TP.HCM',
+        type: 'Chuỗi nhượng quyền',
+        machine: 'Nuova Simonelli 2 Group x2',
+        beanUsage: '70 kg/tháng',
+        sale: 'Trần Nhật Nam',
+        status: 'Sắp hết hạt cà phê (Còn 3 ngày)',
+        badgeColor: 'bg-red-100 text-red-800'
+      },
+      {
+        id: 5,
+        cafe: 'An Cafe & Bakery',
+        owner: 'Chị Đỗ Hoài An',
+        phone: '0977223344',
+        address: 'KĐT Văn Quán, Q. Hà Đông, Hà Nội',
+        type: 'Cà phê & Bánh ngọt',
+        machine: 'Nuova Simonelli Appia II',
+        beanUsage: '25 kg/tháng',
+        sale: 'Bùi Anh Tuấn',
+        status: 'Đến hạn bảo dưỡng 90 ngày',
+        badgeColor: 'bg-purple-100 text-purple-800'
+      },
+      {
+        id: 6,
+        cafe: 'Hương Biển Coffee',
+        owner: 'Anh Trần Quốc Bảo',
+        phone: '0935112233',
+        address: '24 Bạch Đằng, Q. Hải Châu, Đà Nẵng',
+        type: 'Quán cà phê sân vườn',
+        machine: 'Breville 870 XL',
+        beanUsage: '18 kg/tháng',
+        sale: 'Lê Hoàng Long',
+        status: 'Đang hẹn demo máy lớn',
+        badgeColor: 'bg-amber-100 text-amber-800'
+      }
+    ];
+
+    // RENDER CUSTOMERS TABLE
+    function renderCustomerTable() {
+      const tbody = document.getElementById('customer-table-body');
+      tbody.innerHTML = '';
+
+      customersData.forEach(c => {
+        // Logic che số điện thoại bảo mật
+        let displayPhone = c.phone;
+        if (currentRole === 'sales' && c.sale !== 'Bùi Anh Tuấn') {
+          displayPhone = c.phone.substring(0, 3) + '****' + c.phone.substring(7);
+        } else if (currentRole === 'technical') {
+          displayPhone = c.phone.substring(0, 3) + '****' + c.phone.substring(7);
+        }
+
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition";
+        tr.innerHTML = `
+          <td class="py-3 px-4 font-semibold text-slate-800">
+            <div class="flex items-center gap-2">
+              <div class="w-7 h-7 rounded-lg bg-orange-100 text-madg-orange flex items-center justify-center font-bold text-[11px]">
+                <i data-lucide="store" class="w-3.5 h-3.5"></i>
+              </div>
+              <div>
+                <p class="font-bold text-slate-900">${c.cafe}</p>
+                <p class="text-[10px] text-slate-500 font-normal">Chủ quán: ${c.owner}</p>
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-4 font-mono font-bold ${currentRole === 'sales' && c.sale !== 'Bùi Anh Tuấn' ? 'text-slate-400' : 'text-madg-blue'}">
+            ${displayPhone}
+            ${currentRole === 'sales' && c.sale !== 'Bùi Anh Tuấn' ? '<span class="text-[9px] block text-amber-600 font-sans font-normal">(Đã bảo mật)</span>' : ''}
+          </td>
+          <td class="py-3 px-4 text-slate-600 max-w-xs truncate" title="${c.address}">${c.address}</td>
+          <td class="py-3 px-4">
+            <span class="font-semibold text-slate-800">${c.machine}</span>
+            <span class="block text-[10px] text-slate-400">${c.type}</span>
+          </td>
+          <td class="py-3 px-4 font-bold text-madg-orange">${c.beanUsage}</td>
+          <td class="py-3 px-4 font-medium text-slate-700">${c.sale}</td>
+          <td class="py-3 px-4">
+            <span class="px-2 py-0.5 rounded font-semibold text-[10px] ${c.badgeColor}">${c.status}</span>
+          </td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="alert('Mở chi tiết quán ${c.cafe}!')" class="p-1.5 text-slate-400 hover:text-madg-blue rounded hover:bg-slate-100" title="Xem chi tiết">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+    }
+
+    // ROLE SWITCHER
+    function changeRole(role) {
+      currentRole = role;
+      const roleBadge = document.getElementById('role-badge');
+      const roleDesc = document.getElementById('role-desc');
+      const securityNoticeText = document.getElementById('security-notice-text');
+      const footerUsername = document.getElementById('footer-username');
+      const footerUserrole = document.getElementById('footer-userrole');
+
+      if (role === 'admin') {
+        roleBadge.className = "text-[10px] px-1.5 py-0.5 rounded font-semibold bg-emerald-100 text-emerald-700";
+        roleBadge.innerText = "Full Quyền";
+        roleDesc.innerText = "Đang xem chế độ Giám đốc: Thấy đầy đủ số điện thoại khách hàng, xem doanh thu và lợi nhuận giá vốn.";
+        securityNoticeText.innerHTML = "Chế độ <strong>Ban Giám Đốc</strong>: Hiển thị đầy đủ số điện thoại và toàn bộ hồ sơ khách hàng.";
+        footerUsername.innerText = "Ban Giám Đốc";
+        footerUserrole.innerText = "Toàn quyền hệ thống";
+      } else if (role === 'sales') {
+        roleBadge.className = "text-[10px] px-1.5 py-0.5 rounded font-semibold bg-amber-100 text-amber-800";
+        roleBadge.innerText = "Sales Phụ Trách";
+        roleDesc.innerText = "Đang xem dưới vai trò Bùi Anh Tuấn (Sales): Số điện thoại của khách thuộc nhân viên khác bị mã hóa chống mang tệp khách sang đối thủ.";
+        securityNoticeText.innerHTML = "Chế độ <strong>Nhân Viên Sales (Bùi Anh Tuấn)</strong>: Các số điện thoại khách không thuộc phụ trách bị mã hóa <code>098****21</code> để bảo vệ dữ liệu công ty.";
+        footerUsername.innerText = "Bùi Anh Tuấn (Sales)";
+        footerUserrole.innerText = "Phụ trách Hà Nội";
+      } else if (role === 'accountant') {
+        roleBadge.className = "text-[10px] px-1.5 py-0.5 rounded font-semibold bg-purple-100 text-purple-800";
+        roleBadge.innerText = "Kho & Kế Toán";
+        roleDesc.innerText = "Đang xem dưới vai trò Kế toán: Thao tác xuất nhập kho, tải file đối chiếu Excel, quản lý công nợ.";
+        securityNoticeText.innerHTML = "Chế độ <strong>Kế Toán / Thủ Kho</strong>: Tập trung vào đối chiếu kho Excel, tình trạng giao máy và thanh toán.";
+        footerUsername.innerText = "Nguyễn Thu Mai";
+        footerUserrole.innerText = "Kế toán kho";
+      } else if (role === 'technical') {
+        roleBadge.className = "text-[10px] px-1.5 py-0.5 rounded font-semibold bg-sky-100 text-sky-800";
+        roleBadge.innerText = "Kỹ Thuật Máy";
+        roleDesc.innerText = "Đang xem dưới vai trò Kỹ thuật viên: Xem số Serial máy móc, lịch bảo dưỡng 90 ngày, lịch lắp đặt.";
+        securityNoticeText.innerHTML = "Chế độ <strong>Kỹ Thuật Viên</strong>: Xem thông số máy, linh kiện và lịch bảo trì định kỳ.";
+        footerUsername.innerText = "Nguyễn Văn Bình";
+        footerUserrole.innerText = "Kỹ thuật trưởng";
+      }
+      renderCustomerTable();
+    }
+
+    // TAB NAVIGATION
+    function switchTab(tabId) {
+      const views = ['dashboard', 'customers', 'ai-mcp', 'inventory', 'marketing'];
+      views.forEach(v => {
+        document.getElementById(`view-${v}`).classList.add('hidden');
+        document.getElementById(`nav-${v}`).classList.remove('active-tab');
+      });
+
+      document.getElementById(`view-${tabId}`).classList.remove('hidden');
+      document.getElementById(`nav-${tabId}`).classList.add('active-tab');
+
+      // Update titles
+      const pageTitle = document.getElementById('page-title');
+      const pageSubtitle = document.getElementById('page-subtitle');
+      if (tabId === 'dashboard') {
+        pageTitle.innerHTML = '<i data-lucide="layout-dashboard" class="w-5 h-5 text-madg-blue"></i> Tổng Quan Điều Hành & Cảnh Báo Nước Rút Ngày 29';
+        pageSubtitle.innerText = 'Giám sát doanh số thiết bị, nguyên vật liệu F&B và rà soát KPI nhân sự trước kỳ chốt lương 30 hàng tháng.';
+      } else if (tabId === 'customers') {
+        pageTitle.innerHTML = '<i data-lucide="coffee" class="w-5 h-5 text-madg-orange"></i> Quản Lý Khách Hàng F&B & Thuật Toán Chống Trùng';
+        pageSubtitle.innerText = 'Theo dõi hồ sơ quán cà phê, máy móc sở hữu, mức tiêu thụ hạt và kiểm soát tranh chấp dữ liệu giữa các nhân viên Sales.';
+      } else if (tabId === 'ai-mcp') {
+        pageTitle.innerHTML = '<i data-lucide="bot" class="w-5 h-5 text-madg-blue"></i> Trợ Lý AI MCP - Ra Lệnh Giọng Nói & Nhập Liệu Không Cần Vào CRM';
+        pageSubtitle.innerText = 'Tự động trích xuất thông tin, kiểm tra trùng lặp và ghi vào CRM chỉ qua 1 câu nói tự nhiên.';
+      } else if (tabId === 'inventory') {
+        pageTitle.innerHTML = '<i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i> Đối Chiếu & Đồng Bộ Kho Excel (Diff & Sync Engine)';
+        pageSubtitle.innerText = 'Kế toán tải file Excel lên -> Hệ thống so khớp chênh lệch số lượng, giá bán và cảnh báo bất thường trước khi ghi nhận.';
+      } else if (tabId === 'marketing') {
+        pageTitle.innerHTML = '<i data-lucide="repeat" class="w-5 h-5 text-purple-600"></i> Tiếp Thị Tự Động & Lịch Bảo Trì Máy 90 Ngày';
+        pageSubtitle.innerText = 'Cảnh báo quán sắp cạn hạt cà phê (chu kỳ 15-20 ngày) và nhắc nhở thay gioăng bảo dưỡng máy pha định kỳ.';
+      }
+      lucide.createIcons();
+    }
+
+    // DUPLICATE CHECK SIMULATION
+    function simulateDuplicateCheck() {
+      document.getElementById('dup-cafe-name').innerText = "The Coffee Tree (Q. Phú Nhuận)";
+      document.getElementById('dup-phone').innerText = "0903 123 456";
+      document.getElementById('dup-owner').innerText = "Trần Nhật Nam (Đã phụ trách từ 12/08/2026)";
+      document.getElementById('duplicate-modal').classList.remove('hidden');
+    }
+
+    function closeDuplicateModal() {
+      document.getElementById('duplicate-modal').classList.add('hidden');
+    }
+
+    // ADD CUSTOMER MODAL
+    function openAddCustomerModal() {
+      document.getElementById('add-customer-modal').classList.remove('hidden');
+    }
+    function closeAddCustomerModal() {
+      document.getElementById('add-customer-modal').classList.add('hidden');
+    }
+
+    function submitNewCustomer() {
+      const phone = document.getElementById('input-phone').value.trim();
+      const cafe = document.getElementById('input-cafe').value.trim();
+      const owner = document.getElementById('input-owner').value.trim();
+      const address = document.getElementById('input-address').value.trim();
+      const hardware = document.getElementById('input-hardware').value.trim();
+      const type = document.getElementById('input-type').value;
+      const assigned = document.getElementById('input-assigned').value;
+
+      if (!phone || !cafe) {
+        alert('Vui lòng nhập đầy đủ Số điện thoại và Tên quán!');
+        return;
+      }
+
+      // Check duplicate against existing
+      const isDuplicate = customersData.some(c => c.phone.replace(/[^0-9]/g, '') === phone.replace(/[^0-9]/g, ''));
+      if (isDuplicate) {
+        closeAddCustomerModal();
+        document.getElementById('dup-cafe-name').innerText = cafe;
+        document.getElementById('dup-phone').innerText = phone;
+        document.getElementById('duplicate-modal').classList.remove('hidden');
+        return;
+      }
+
+      // Add to data
+      customersData.unshift({
+        id: Date.now(),
+        cafe: cafe,
+        owner: owner || 'Chưa rõ',
+        phone: phone,
+        address: address || 'Chưa cập nhật',
+        type: type,
+        machine: hardware || 'Chưa chọn máy',
+        beanUsage: 'Dự kiến 20 kg/tháng',
+        sale: assigned,
+        status: 'Khách mới tiếp cận',
+        badgeColor: 'bg-emerald-100 text-emerald-800'
+      });
+
+      closeAddCustomerModal();
+      renderCustomerTable();
+      switchTab('customers');
+      alert(`✅ Đã kiểm tra trùng lặp thành công! Khách hàng "${cafe}" đã được lưu vào CRM và gán cho ${assigned}!`);
+    }
+
+    // AI MCP DEMO EXECUTION
+    function runMcpDemo(type) {
+      const chatMessages = document.getElementById('chat-messages');
+
+      if (type === 1) {
+        // User command
+        appendUserMessage("Thêm khách anh Hùng chủ quán Retro Cafe ở số 12 đường 3/2 Q10, SĐT 0987654321, đang hỏi máy pha Expobar 35 triệu và 5kg hạt Robusta");
+
+        // AI processing
+        setTimeout(() => {
+          appendAiThinking("AI MCP Agent đang kết nối Tool: `crm_quick_add_customer_and_deal`...");
+          setTimeout(() => {
+            appendAiMessage(`
+              <div class="space-y-2">
+                <div class="flex items-center gap-1.5 text-emerald-600 font-bold">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i> ĐÃ TẠO KHÁCH HÀNG & DEAL MỚI THÀNH CÔNG VÀO CRM!
+                </div>
+                <div class="p-2.5 bg-white rounded-lg border border-slate-200 text-[11px] space-y-1">
+                  <p><strong>Khách hàng:</strong> Anh Hùng - Quán Retro Cafe</p>
+                  <p><strong>Số điện thoại:</strong> 0987 654 321 (Đã quét chống trùng: Hợp lệ 100%)</p>
+                  <p><strong>Địa chỉ:</strong> 12 Đường 3/2, P.12, Q.10, TP.HCM</p>
+                  <p><strong>Deal tạo mới:</strong> Máy pha Expobar (35.000.000 đ) + 5kg Robusta (1.100.000 đ)</p>
+                  <p><strong>Tổng giá trị:</strong> 36.100.000 đ - Giai đoạn: <em>Gửi Báo Giá Combo</em></p>
+                  <p><strong>Nhân viên phụ trách:</strong> Gán tự động cho Bùi Anh Tuấn</p>
+                </div>
+                <p class="text-slate-500 text-[10px]">Dữ liệu đã đồng bộ thời gian thực vào bảng khách hàng CRM.</p>
+              </div>
+            `);
+            // Add into real customer list
+            customersData.unshift({
+              id: Date.now(),
+              cafe: 'Retro Cafe (Q10)',
+              owner: 'Anh Hùng',
+              phone: '0987654321',
+              address: '12 Đường 3/2, P.12, Q.10, TP.HCM',
+              type: 'Quán phong cách cổ điển',
+              machine: 'Expobar 1 Group + 5kg Hạt',
+              beanUsage: '5 kg/đợt đầu',
+              sale: 'Bùi Anh Tuấn',
+              status: 'Mới tạo qua AI MCP',
+              badgeColor: 'bg-madg-lightblue text-madg-darkblue'
+            });
+            renderCustomerTable();
+          }, 1000);
+        }, 500);
+
+      } else if (type === 2) {
+        appendUserMessage("Nhập cho anh quán The Coffee Tree số 0903123456 hỏi lấy thêm máy xay");
+        setTimeout(() => {
+          appendAiThinking("AI MCP Agent đang gọi Tool: `crm_anti_duplicate_validator`...");
+          setTimeout(() => {
+            appendAiMessage(`
+              <div class="space-y-2 text-red-700">
+                <div class="flex items-center gap-1.5 font-bold text-red-600">
+                  <i data-lucide="shield-alert" class="w-4 h-4"></i> CẢNH BÁO: KHÁCH HÀNG BỊ TRÙNG LẶP DỮ LIỆU!
+                </div>
+                <div class="p-2.5 bg-red-50 rounded-lg border border-red-200 text-[11px] space-y-1 text-slate-700">
+                  <p><strong>Phát hiện:</strong> Số điện thoại <code>0903123456</code> và Quán <strong>The Coffee Tree</strong> đã tồn tại trong CRM.</p>
+                  <p><strong>Người phụ trách:</strong> Trần Nhật Nam (Đã chăm sóc từ 12/08/2026).</p>
+                  <p><strong>Lệnh từ chối:</strong> Hệ thống hủy lệnh tạo mới để tránh xung đột doanh số nội bộ.</p>
+                </div>
+              </div>
+            `);
+          }, 800);
+        }, 400);
+
+      } else if (type === 3) {
+        appendUserMessage("Quán Tiệm Cà Phê Mùa Thu đã mua những máy gì, khi nào đến hạn bảo dưỡng?");
+        setTimeout(() => {
+          appendAiThinking("AI MCP Agent đang truy vấn Tool: `crm_get_machine_warranty_history`...");
+          setTimeout(() => {
+            appendAiMessage(`
+              <div class="space-y-2">
+                <div class="flex items-center gap-1.5 text-madg-blue font-bold">
+                  <i data-lucide="info" class="w-4 h-4"></i> THÔNG TIN THIẾT BỊ & BẢO HÀNH: TIỆM CÀ PHÊ MÙA THU
+                </div>
+                <div class="p-2.5 bg-sky-50 rounded-lg border border-sky-200 text-[11px] space-y-1 text-slate-700">
+                  <p><strong>Chủ quán:</strong> Chị Mai Lan - Cầu Giấy, Hà Nội</p>
+                  <p><strong>Thiết bị đang chạy:</strong> 1 Máy pha Casadio Undici A1 + 1 Máy xay Fiorenzato</p>
+                  <p><strong>Tình trạng thanh toán:</strong> Đã cọc 30% (21.000.000 đ), còn 70% thanh toán sau lắp đặt</p>
+                  <p><strong>Chu kỳ bảo trì:</strong> Lịch bảo dưỡng đầu tiên dự kiến vào ngày <strong>15/01/2027</strong> (Thay gioăng định kỳ 90 ngày).</p>
+                </div>
+              </div>
+            `);
+          }, 800);
+        }, 400);
+      }
+    }
+
+    function appendUserMessage(text) {
+      const container = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = "flex items-start justify-end gap-2.5";
+      div.innerHTML = `
+        <div class="p-3 bg-madg-blue text-white rounded-2xl rounded-tr-none text-xs leading-relaxed max-w-[85%]">
+          ${text}
+        </div>
+        <div class="w-6 h-6 rounded-full bg-slate-700 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">Sếp</div>
+      `;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function appendAiThinking(text) {
+      const container = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.id = "ai-thinking-indicator";
+      div.className = "flex items-center gap-2 text-[11px] text-slate-400 italic";
+      div.innerHTML = `<span class="w-2 h-2 rounded-full bg-madg-blue animate-ping"></span> ${text}`;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function appendAiMessage(htmlContent) {
+      const indicator = document.getElementById('ai-thinking-indicator');
+      if (indicator) indicator.remove();
+
+      const container = document.getElementById('chat-messages');
+      const div = document.createElement('div');
+      div.className = "flex items-start gap-2.5 max-w-[85%]";
+      div.innerHTML = `
+        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-madg-blue to-cyan-500 text-white flex items-center justify-center shrink-0 text-[10px] font-bold">AI</div>
+        <div class="p-3 bg-slate-100 rounded-2xl rounded-tl-none text-slate-700 leading-relaxed w-full">
+          ${htmlContent}
+        </div>
+      `;
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+      lucide.createIcons();
+    }
+
+    function sendCustomChat() {
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = '';
+
+      appendUserMessage(text);
+      setTimeout(() => {
+        appendAiThinking("AI MCP Agent đang phân tích ngữ nghĩa và kết nối CRM...");
+        setTimeout(() => {
+          appendAiMessage(`
+            <div>
+              <p class="font-bold text-slate-800">Đã tiếp nhận yêu cầu: "${text}"</p>
+              <p class="text-slate-500 mt-1">Hệ thống AI MCP đã trích xuất thực thể, kiểm tra bảng phân quyền và tự động cập nhật vào cơ sở dữ liệu MADG CRM.</p>
+            </div>
+          `);
+        }, 900);
+      }, 300);
+    }
+
+    function clearChat() {
+      const container = document.getElementById('chat-messages');
+      container.innerHTML = `
+        <div class="flex items-start gap-2.5 max-w-[85%]">
+          <div class="w-6 h-6 rounded-full bg-madg-blue text-white flex items-center justify-center shrink-0 text-[10px] font-bold">AI</div>
+          <div class="p-3 bg-slate-100 rounded-2xl rounded-tl-none text-slate-700 leading-relaxed">
+            Hội thoại đã được làm mới. Hãy nhập câu lệnh hoặc chọn các tình huống mẫu bên trái để thử nghiệm!
+          </div>
+        </div>
+      `;
+    }
+
+    // EXCEL DIFF SIMULATION
+    function simulateExcelUpload() {
+      alert('Đã tải lên tệp "BaoCao_TonKho_29_09_2026.xlsx"! Hệ thống đã đối chiếu và tìm thấy 2 sản phẩm mới, 3 sản phẩm cập nhật tồn kho và 1 cảnh báo chênh lệch âm.');
+      switchTab('inventory');
+    }
+
+    function approveSync() {
+      alert('✅ Phê duyệt thành công! Toàn bộ 5 sản phẩm hợp lệ đã được đồng bộ vào Database CRM MADG. Ghi vết Audit Log hoàn tất.');
+    }
+
+    function sendZaloReminder(cafe) {
+      alert(`Đã kích hoạt mẫu Zalo ZNS gửi đến chủ quán "${cafe}": "Chào Anh/Chị, theo lịch hệ thống quán mình sắp hết cà phê hạt mộc. MADG xin gửi báo giá ưu đãi tiếp tế giao nhanh trong 2h!"`);
+    }
+
+    // CHARTS INITIALIZATION
+    window.onload = function() {
+      renderCustomerTable();
+      lucide.createIcons();
+
+      // Chart 1: Doanh số thiết bị vs nguyên liệu
+      const ctxRev = document.getElementById('revenueChart').getContext('2d');
+      new Chart(ctxRev, {
+        type: 'bar',
+        data: {
+          labels: ['Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9 (Đến 29)'],
+          datasets: [
+            {
+              label: 'Máy móc & Thiết bị F&B (Triệu VNĐ)',
+              data: [320, 390, 410, 485],
+              backgroundColor: '#0088d6',
+              borderRadius: 6
+            },
+            {
+              label: 'Nguyên liệu Hạt & Tiêu hao (Triệu VNĐ)',
+              data: [75, 92, 110, 128.4],
+              backgroundColor: '#f58220',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 10 } } }
+          },
+          scales: {
+            y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+            x: { grid: { display: false } }
+          }
+        }
+      });
+
+      // Chart 2: Phân bổ quán F&B
+      const ctxCafe = document.getElementById('cafeTypeChart').getContext('2d');
+      new Chart(ctxCafe, {
+        type: 'doughnut',
+        data: {
+          labels: ['Quán mở mới (Setup trọn gói)', 'Specialty Coffee', 'Chuỗi nhượng quyền', 'Trà sữa & Takeaway'],
+          datasets: [{
+            data: [42, 28, 18, 12],
+            backgroundColor: ['#0088d6', '#f58220', '#10b981', '#8b5cf6'],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 10 } } }
+          }
+        }
+      });
+    };
+  </script>
+</body>
+</html>
