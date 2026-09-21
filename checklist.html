@@ -55,23 +55,23 @@
     }
   </style>
 </head>
-<body class="py-8 px-4 sm:px-6 lg:px-8">
+<body class="py-4 px-2.5 sm:py-8 sm:px-6 lg:px-8">
 
   <!-- TOP ACTION BAR (NO PRINT) -->
-  <div class="max-w-5xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-4 no-print bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+  <div class="max-w-5xl mx-auto mb-5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 no-print bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-sm">
     <div class="flex items-center gap-2">
-      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-      <span class="text-xs font-bold text-slate-700">Tài Liệu Hướng Dẫn Thu Thập Dữ Liệu Ban Đầu - MADG CRM</span>
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+      <span class="text-xs font-bold text-slate-800 leading-tight">Tài Liệu Hướng Dẫn Thu Thập Dữ Liệu Ban Đầu - MADG CRM</span>
     </div>
-    <div class="flex items-center gap-3">
-      <a href="#section-nhan-su" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold transition">
-        <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i> Bấm Xem Danh Sách Nhân Sự Tạo TK
+    <div class="flex flex-wrap sm:flex-nowrap items-center gap-2">
+      <a href="#section-nhan-su" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-xs font-bold transition text-center">
+        <i data-lucide="user-check" class="w-4 h-4 text-emerald-600 shrink-0"></i> <span>Ds Nhân Sự Tạo TK</span>
       </a>
-      <a href="index.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-        <i data-lucide="layout-dashboard" class="w-4 h-4 text-madg-blue"></i> Xem Bản Demo CRM Thực Tế
+      <a href="index.html" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition text-center">
+        <i data-lucide="layout-dashboard" class="w-4 h-4 text-madg-blue shrink-0"></i> <span>Bản Demo CRM</span>
       </a>
-      <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-madg-blue hover:bg-madg-darkblue text-white text-xs font-bold shadow-sm transition">
-        <i data-lucide="printer" class="w-4 h-4"></i> In Báo Cáo / Xuất PDF
+      <button onclick="window.print()" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-madg-blue hover:bg-madg-darkblue text-white text-xs font-bold shadow-sm transition text-center">
+        <i data-lucide="printer" class="w-4 h-4 shrink-0"></i> <span>In / Xuất PDF</span>
       </button>
     </div>
   </div>
@@ -184,7 +184,10 @@
 
           <!-- VISUAL SAMPLE TABLE -->
           <div class="mt-3">
-            <p class="text-[11px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Bảng ví dụ trực quan MADG có thể gửi mẫu:</p>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Bảng ví dụ trực quan MADG có thể gửi mẫu:</p>
+              <span class="sm:hidden inline-flex items-center gap-1 text-[10px] text-madg-blue font-semibold bg-blue-50 px-2 py-0.5 rounded-full"><i data-lucide="arrow-right-left" class="w-3 h-3"></i> Vuốt xem</span>
+            </div>
             <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
               <table class="w-full text-[11px] text-left">
                 <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
@@ -375,11 +378,14 @@
 
         <!-- 2. MA TRẬN NGUYÊN TẮC CHE / MỞ DỮ LIỆU (BẢO MẬT) -->
         <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
-          <div class="p-3.5 bg-slate-100 border-b border-slate-200 flex items-center justify-between">
+          <div class="p-3.5 bg-slate-100 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
             <h3 class="text-xs font-bold text-slate-800 flex items-center gap-1.5 uppercase">
               <i data-lucide="eye-off" class="w-4 h-4 text-red-600"></i> 2. Ma Trận Phân Loại Dữ Liệu & Nguyên Tắc Che / Mở (Data Masking)
             </h3>
-            <span class="text-[10px] font-semibold text-slate-500">Chống thất thoát dữ liệu khách hàng</span>
+            <div class="flex items-center gap-2">
+              <span class="sm:hidden inline-flex items-center gap-1 text-[10px] text-madg-blue font-semibold bg-blue-50 px-2 py-0.5 rounded-full"><i data-lucide="arrow-right-left" class="w-3 h-3"></i> Vuốt xem</span>
+              <span class="text-[10px] font-semibold text-slate-500 hidden sm:inline">Chống thất thoát dữ liệu khách hàng</span>
+            </div>
           </div>
 
           <div class="overflow-x-auto">
@@ -539,7 +545,10 @@
         <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <p class="text-xs font-semibold text-slate-700">MADG chỉ cần điền hoặc gửi danh sách nhân sự theo các cột mẫu chuẩn sau:</p>
-            <span class="text-[10px] text-slate-400 italic">* Mật khẩu ban đầu sẽ được cấp riêng và nhân viên tự đổi lần đầu</span>
+            <div class="flex items-center gap-2">
+              <span class="sm:hidden inline-flex items-center gap-1 text-[10px] text-madg-blue font-semibold bg-blue-50 px-2 py-0.5 rounded-full"><i data-lucide="arrow-right-left" class="w-3 h-3"></i> Vuốt xem</span>
+              <span class="text-[10px] text-slate-400 italic hidden sm:inline">* Mật khẩu ban đầu sẽ được cấp riêng và nhân viên tự đổi lần đầu</span>
+            </div>
           </div>
 
           <!-- BẢNG MẪU DANH SÁCH NHÂN SỰ TO RÕ -->

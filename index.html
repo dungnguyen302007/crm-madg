@@ -82,13 +82,19 @@
     </div>
   </div>
 
-  <div class="flex flex-1 overflow-hidden">
-    <!-- SIDEBAR -->
-    <aside class="w-72 bg-white border-r border-slate-200 flex flex-col shrink-0">
+  <div class="flex flex-1 overflow-hidden relative">
+    <!-- MOBILE SIDEBAR BACKDROP -->
+    <div id="sidebar-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 hidden transition-opacity"></div>
+
+    <!-- SIDEBAR (RESPONSIVE DRAWER ON MOBILE, STATIC ON DESKTOP) -->
+    <aside id="app-sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col shrink-0 transform -translate-x-full lg:translate-x-0 lg:static transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none">
       <!-- LOGO MADG -->
-      <div class="p-4 border-b border-slate-100 flex flex-col items-center text-center bg-white">
-        <img src="assets/logo-madg.png" alt="MADG Logo" class="h-16 object-contain mb-1 hover:scale-105 transition-transform" onerror="this.onerror=null; this.src='https://dummyimage.com/200x60/0088d6/ffffff&text=MADG';">
-        <p class="text-[11px] font-semibold tracking-wider text-madg-orange uppercase">Nơi khởi đầu cho những thành công</p>
+      <div class="p-4 border-b border-slate-100 flex flex-col items-center text-center bg-white relative">
+        <button onclick="toggleMobileSidebar()" class="lg:hidden p-1.5 text-slate-400 hover:text-slate-600 rounded-lg absolute top-3 right-3" title="Đóng menu">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <img src="assets/logo-madg.png" alt="MADG Logo" class="h-14 sm:h-16 object-contain mb-1 hover:scale-105 transition-transform" onerror="this.onerror=null; this.src='https://dummyimage.com/200x60/0088d6/ffffff&text=MADG';">
+        <p class="text-[10px] sm:text-[11px] font-semibold tracking-wider text-madg-orange uppercase">Nơi khởi đầu cho những thành công</p>
       </div>
 
       <!-- ROLE SIMULATOR (Bộ giả lập phân quyền bảo mật) -->
@@ -175,27 +181,38 @@
     <!-- MAIN CONTENT AREA -->
     <main class="flex-1 flex flex-col overflow-y-auto custom-scrollbar">
       
-      <!-- TOP HEADER -->
-      <header class="bg-white border-b border-slate-200 py-3.5 px-6 flex items-center justify-between sticky top-0 z-10">
-        <div>
-          <h1 id="page-title" class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-            <i data-lucide="layout-dashboard" class="w-5 h-5 text-madg-blue"></i>
-            Tổng Quan Điều Hành & Cảnh Báo Nước Rút Ngày 29
-          </h1>
-          <p id="page-subtitle" class="text-xs text-slate-500">Giám sát doanh số thiết bị, nguyên vật liệu F&B và rà soát KPI nhân sự trước kỳ chốt lương 30 hàng tháng.</p>
+      <!-- TOP HEADER (RESPONSIVE) -->
+      <header class="bg-white border-b border-slate-200 py-3 px-3.5 sm:px-6 flex items-center justify-between sticky top-0 z-10 gap-2">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <!-- MOBILE HAMBURGER BUTTON -->
+          <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition shrink-0" title="Mở danh mục CRM">
+            <i data-lucide="menu" class="w-5 h-5 text-madg-blue"></i>
+          </button>
+          <div class="min-w-0">
+            <h1 id="page-title" class="text-sm sm:text-lg font-extrabold text-slate-900 flex items-center gap-1.5 truncate">
+              <i data-lucide="layout-dashboard" class="w-4 h-4 sm:w-5 sm:h-5 text-madg-blue shrink-0"></i>
+              <span>Tổng Quan Điều Hành & Cảnh Báo 29</span>
+            </h1>
+            <p id="page-subtitle" class="text-[11px] sm:text-xs text-slate-500 hidden sm:block truncate">Giám sát doanh số thiết bị, nguyên vật liệu F&B và rà soát KPI nhân sự trước kỳ chốt lương 30 hàng tháng.</p>
+          </div>
         </div>
-        <div class="flex items-center gap-3">
+
+        <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <!-- Live Date Badge -->
-          <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-xs text-slate-700 font-medium">
+          <div class="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-xs text-slate-700 font-medium">
             <i data-lucide="calendar" class="w-3.5 h-3.5 text-madg-orange"></i>
-            <span>Hôm nay: <strong>29/09/2026</strong> (Kỳ chốt số)</span>
+            <span>Hôm nay: <strong>29/09/2026</strong></span>
           </div>
           <!-- Quick Action Button -->
-          <a href="checklist.html" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-madg-darkorange border border-amber-300 text-xs font-bold shadow-sm transition">
-            <i data-lucide="file-check-2" class="w-4 h-4"></i> Báo Cáo Thu Thập Dữ Liệu
+          <a href="checklist.html" class="flex items-center gap-1 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-madg-darkorange border border-amber-300 text-[11px] sm:text-xs font-bold shadow-sm transition">
+            <i data-lucide="file-check-2" class="w-3.5 h-3.5"></i>
+            <span class="hidden md:inline">Báo Cáo Thu Thập Dữ Liệu</span>
+            <span class="md:hidden">Báo Cáo</span>
           </a>
-          <button onclick="openAddCustomerModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-madg-blue hover:bg-madg-darkblue text-white text-xs font-semibold shadow-sm transition">
-            <i data-lucide="plus-circle" class="w-4 h-4"></i> Thêm Khách Hàng F&B
+          <button onclick="openAddCustomerModal()" class="flex items-center gap-1 px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-madg-blue hover:bg-madg-darkblue text-white text-[11px] sm:text-xs font-semibold shadow-sm transition">
+            <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+            <span class="hidden md:inline">Thêm Khách Hàng F&B</span>
+            <span class="md:hidden">Thêm Khách</span>
           </button>
         </div>
       </header>
@@ -1281,6 +1298,21 @@
       renderCustomerTable();
     }
 
+    // MOBILE SIDEBAR TOGGLE LOGIC
+    function toggleMobileSidebar() {
+      const sidebar = document.getElementById('app-sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      if (!sidebar || !backdrop) return;
+      const isClosed = sidebar.classList.contains('-translate-x-full');
+      if (isClosed) {
+        sidebar.classList.remove('-translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('-translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
     // TAB NAVIGATION
     function switchTab(tabId) {
       const views = ['dashboard', 'customers', 'ai-mcp', 'inventory', 'marketing', 'users'];
@@ -1292,26 +1324,36 @@
       document.getElementById(`view-${tabId}`).classList.remove('hidden');
       document.getElementById(`nav-${tabId}`).classList.add('active-tab');
 
+      // Tự động đóng sidebar trên Mobile sau khi bấm chọn Tab
+      if (window.innerWidth < 1024) {
+        const sidebar = document.getElementById('app-sidebar');
+        const backdrop = document.getElementById('sidebar-backdrop');
+        if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+          sidebar.classList.add('-translate-x-full');
+          backdrop.classList.add('hidden');
+        }
+      }
+
       // Update titles
       const pageTitle = document.getElementById('page-title');
       const pageSubtitle = document.getElementById('page-subtitle');
       if (tabId === 'dashboard') {
-        pageTitle.innerHTML = '<i data-lucide="layout-dashboard" class="w-5 h-5 text-madg-blue"></i> Tổng Quan Điều Hành & Cảnh Báo Nước Rút Ngày 29';
+        pageTitle.innerHTML = '<i data-lucide="layout-dashboard" class="w-4 h-4 sm:w-5 sm:h-5 text-madg-blue shrink-0"></i> <span>Tổng Quan Điều Hành & Cảnh Báo 29</span>';
         pageSubtitle.innerText = 'Giám sát doanh số thiết bị, nguyên vật liệu F&B và rà soát KPI nhân sự trước kỳ chốt lương 30 hàng tháng.';
       } else if (tabId === 'customers') {
-        pageTitle.innerHTML = '<i data-lucide="coffee" class="w-5 h-5 text-madg-orange"></i> Quản Lý Khách Hàng F&B & Thuật Toán Chống Trùng';
+        pageTitle.innerHTML = '<i data-lucide="coffee" class="w-4 h-4 sm:w-5 sm:h-5 text-madg-orange shrink-0"></i> <span>Quản Lý Khách Hàng F&B & Chống Trùng</span>';
         pageSubtitle.innerText = 'Theo dõi hồ sơ quán cà phê, máy móc sở hữu, mức tiêu thụ hạt và kiểm soát tranh chấp dữ liệu giữa các nhân viên Sales.';
       } else if (tabId === 'ai-mcp') {
-        pageTitle.innerHTML = '<i data-lucide="bot" class="w-5 h-5 text-madg-blue"></i> Trợ Lý AI MCP - Ra Lệnh Giọng Nói & Nhập Liệu Không Cần Vào CRM';
+        pageTitle.innerHTML = '<i data-lucide="bot" class="w-4 h-4 sm:w-5 sm:h-5 text-madg-blue shrink-0"></i> <span>Trợ Lý AI MCP - Ra Lệnh Bằng Giọng Nói</span>';
         pageSubtitle.innerText = 'Tự động trích xuất thông tin, kiểm tra trùng lặp và ghi vào CRM chỉ qua 1 câu nói tự nhiên.';
       } else if (tabId === 'inventory') {
-        pageTitle.innerHTML = '<i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-600"></i> Đối Chiếu & Đồng Bộ Kho Excel (Diff & Sync Engine)';
+        pageTitle.innerHTML = '<i data-lucide="file-spreadsheet" class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0"></i> <span>Đối Chiếu & Đồng Bộ Kho Excel (Diff Sync)</span>';
         pageSubtitle.innerText = 'Kế toán tải file Excel lên -> Hệ thống so khớp chênh lệch số lượng, giá bán và cảnh báo bất thường trước khi ghi nhận.';
       } else if (tabId === 'marketing') {
-        pageTitle.innerHTML = '<i data-lucide="megaphone" class="w-5 h-5 text-pink-600"></i> Tiếp Thị & Phễu Chăm Sóc Khách Hàng F&B Tự Động';
+        pageTitle.innerHTML = '<i data-lucide="megaphone" class="w-4 h-4 sm:w-5 sm:h-5 text-pink-600 shrink-0"></i> <span>Tiếp Thị & Nuôi Dưỡng Khách Hàng Tự Động</span>';
         pageSubtitle.innerText = 'Đo lường ROI từng kênh quảng cáo và kích hoạt kịch bản tự động giữ chân quán quen mua hạt.';
       } else if (tabId === 'users') {
-        pageTitle.innerHTML = '<i data-lucide="user-check" class="w-5 h-5 text-emerald-600"></i> Đội Ngũ Nhân Sự & Danh Sách Tài Khoản CRM';
+        pageTitle.innerHTML = '<i data-lucide="user-check" class="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 shrink-0"></i> <span>Đội Ngũ Nhân Sự & Tài Khoản CRM</span>';
         pageSubtitle.innerText = 'Quản lý tài khoản đăng nhập, gán đúng vai trò phòng ban và phân quyền bảo mật dữ liệu.';
       }
       lucide.createIcons();
