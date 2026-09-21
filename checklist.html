@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Báo Cáo Danh Mục Thông Tin Cần Thu Thập - MADG CRM (Giai Đoạn 1)</title>
+  <!-- Google Fonts: Be Vietnam Pro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            madg: {
+              blue: '#0088d6',
+              darkblue: '#00629c',
+              lightblue: '#e0f2fe',
+              orange: '#f58220',
+              darkorange: '#c25e07',
+              lightorange: '#ffedd5',
+              navy: '#0f172a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    @media print {
+      .no-print {
+        display: none !important;
+      }
+      body {
+        background-color: white !important;
+      }
+      .print-shadow-none {
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+      }
+    }
+  </style>
+</head>
+<body class="py-8 px-4 sm:px-6 lg:px-8">
+
+  <!-- TOP ACTION BAR (NO PRINT) -->
+  <div class="max-w-5xl mx-auto mb-6 flex flex-wrap items-center justify-between gap-4 no-print bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      <span class="text-xs font-bold text-slate-700">Tài Liệu Hướng Dẫn Thu Thập Dữ Liệu Ban Đầu - MADG CRM</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+        <i data-lucide="layout-dashboard" class="w-4 h-4 text-madg-blue"></i> Xem Bản Demo CRM Thực Tế
+      </a>
+      <button onclick="window.print()" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-madg-blue hover:bg-madg-darkblue text-white text-xs font-bold shadow-sm transition">
+        <i data-lucide="printer" class="w-4 h-4"></i> In Báo Cáo / Xuất PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN DOCUMENT CONTAINER -->
+  <div class="max-w-5xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden print-shadow-none">
+    
+    <!-- HEADER WITH LOGO & TITLE -->
+    <header class="border-b border-slate-200 p-6 sm:p-8 bg-gradient-to-b from-slate-50 to-white">
+      <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
+        <!-- LOGO MADG -->
+        <div class="flex flex-col items-center sm:items-start">
+          <img src="assets/logo-madg.png" alt="MADG Logo" class="h-20 object-contain mb-2" onerror="this.onerror=null; this.src='https://dummyimage.com/220x70/0088d6/ffffff&text=MADG';">
+          <span class="text-[12px] font-bold text-madg-orange uppercase tracking-wider">Nơi khởi đầu cho những thành công</span>
+        </div>
+
+        <!-- DOCUMENT METADATA -->
+        <div class="text-center sm:text-right text-xs text-slate-500 space-y-1">
+          <div class="inline-block bg-madg-lightblue text-madg-darkblue font-bold px-2.5 py-1 rounded-full text-[11px] uppercase mb-1">
+            Giai đoạn 1: Khách hàng - Bán hàng - Kho - AI
+          </div>
+          <p><strong>Dự án:</strong> Hệ Thống CRM & AI MCP May Đo Doanh Nghiệp F&B</p>
+          <p><strong>Đơn vị thụ hưởng:</strong> Công ty TNHH MADG</p>
+          <p><strong>Ngày phát hành:</strong> 21/09/2026</p>
+        </div>
+      </div>
+
+      <div class="mt-8 text-center sm:text-left">
+        <h1 class="text-xl sm:text-2xl font-black text-slate-900 uppercase tracking-tight">
+          Báo Cáo Danh Mục Tài Liệu & Dữ Liệu Mẫu Cần Cung Cấp
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-2 max-w-3xl leading-relaxed">
+          Kính gửi Ban Giám Đốc và Quý Đội ngũ Quản trị <strong>MADG</strong>. Để hệ thống CRM và Trợ lý AI MCP được cài đặt sát nhất với cách thức vận hành thực tế của công ty, Quý công ty chỉ cần chuẩn bị <strong>1 Thư mục Google Drive chung</strong> và trích xuất khoảng <strong>5 - 10 dòng dữ liệu mẫu</strong> từ các file đang theo dõi hiện tại theo danh mục hướng dẫn dưới đây.
+        </p>
+      </div>
+
+      <!-- 3-STEP EASY GUIDE -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-slate-200 text-xs">
+        <div class="flex items-start gap-3 p-3 bg-blue-50/60 rounded-xl border border-blue-100">
+          <div class="w-6 h-6 rounded-full bg-madg-blue text-white flex items-center justify-center font-bold text-xs shrink-0">1</div>
+          <div>
+            <p class="font-bold text-slate-900">Chuẩn bị File Mẫu</p>
+            <p class="text-slate-500 mt-0.5">Lấy 5-10 dòng thực tế từ file Excel/Google Sheets đang dùng (không cần gửi toàn bộ dữ liệu nhạy cảm).</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 bg-amber-50/60 rounded-xl border border-amber-100">
+          <div class="w-6 h-6 rounded-full bg-madg-orange text-white flex items-center justify-center font-bold text-xs shrink-0">2</div>
+          <div>
+            <p class="font-bold text-slate-900">Tải Lên Google Drive</p>
+            <p class="text-slate-500 mt-0.5">Tải các file mẫu lên 1 thư mục Drive chung để đội kỹ thuật phân tích trường dữ liệu.</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 p-3 bg-emerald-50/60 rounded-xl border border-emerald-100">
+          <div class="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center font-bold text-xs shrink-0">3</div>
+          <div>
+            <p class="font-bold text-slate-900">Bàn Giao & Chạy Thử</p>
+            <p class="text-slate-500 mt-0.5">Hệ thống được số hóa, nạp vào AI MCP và bàn giao bản dùng thử trong 5 - 7 ngày làm việc.</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT BODY -->
+    <div class="p-6 sm:p-8 space-y-10">
+
+      <!-- MỤC 1: FILE KHÁCH HÀNG & LEAD -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 rounded-xl bg-sky-100 text-madg-blue font-bold">
+              <i data-lucide="users" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 uppercase">Mục 1: File Danh Sách Khách Hàng & Lead Mẫu Đang Quản Lý</h2>
+              <p class="text-xs text-slate-500">Mục đích: Thiết kế chuẩn hồ sơ quán F&B, cài đặt tính năng chống trùng và bảo mật số điện thoại.</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-bold px-2.5 py-1 bg-red-50 text-red-700 border border-red-200 rounded-lg">Ưu tiên số 1</span>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+          <p class="text-xs font-semibold text-slate-700">Các thông tin MADG cần trích xuất trong file mẫu gồm:</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-madg-blue flex items-center gap-1.5">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i> Thông tin liên hệ cơ bản
+              </p>
+              <ul class="list-disc list-inside text-slate-600 text-[11px] space-y-1 pl-1">
+                <li>Tên chủ quán / Người quyết định (Ví dụ: <em>Anh Tuấn, Chị Lan</em>)</li>
+                <li>Số điện thoại chính & SĐT phụ / Zalo</li>
+                <li>Email liên hệ (nếu có)</li>
+              </ul>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-madg-orange flex items-center gap-1.5">
+                <i data-lucide="coffee" class="w-3.5 h-3.5"></i> Thông tin đặc thù quán F&B
+              </p>
+              <ul class="list-disc list-inside text-slate-600 text-[11px] space-y-1 pl-1">
+                <li><strong>Tên quán / Tên thương hiệu:</strong> Rất quan trọng để nhận diện quán khi chủ quán đổi SĐT</li>
+                <li><strong>Mô hình quán:</strong> Quán mở mới trọn gói / Quán đang chạy / Specialty / Chuỗi</li>
+                <li><strong>Địa chỉ mặt bằng cụ thể:</strong> Để khảo sát điện nước và điều phối kỹ thuật lắp máy</li>
+                <li><strong>Dòng máy đang dùng hoặc đang hỏi:</strong> (Ví dụ: <em>Faema E98, Casadio...</em>)</li>
+                <li><strong>Mức tiêu thụ hạt cà phê/tháng:</strong> (Ước tính kg/tháng để hệ thống tự nhắc mua lại)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- VISUAL SAMPLE TABLE -->
+          <div class="mt-3">
+            <p class="text-[11px] font-bold text-slate-500 mb-1.5 uppercase tracking-wider">Bảng ví dụ trực quan MADG có thể gửi mẫu:</p>
+            <div class="overflow-x-auto rounded-xl border border-slate-200 bg-white">
+              <table class="w-full text-[11px] text-left">
+                <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="py-2 px-3">Tên Quán F&B</th>
+                    <th class="py-2 px-3">Người Đại Diện</th>
+                    <th class="py-2 px-3">Số Điện Thoại</th>
+                    <th class="py-2 px-3">Địa Chỉ Mặt Bằng</th>
+                    <th class="py-2 px-3">Mô Hình / Thiết Bị</th>
+                    <th class="py-2 px-3">Lượng Hạt/Tháng</th>
+                    <th class="py-2 px-3">Sale Phụ Trách</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-600">
+                  <tr>
+                    <td class="py-2 px-3 font-semibold text-slate-800">The Coffee Tree</td>
+                    <td class="py-2 px-3">Anh Hoàng Tuấn</td>
+                    <td class="py-2 px-3 font-mono">0903 123 456</td>
+                    <td class="py-2 px-3">45 Phan Xích Long, Phú Nhuận, HCM</td>
+                    <td class="py-2 px-3">Specialty / Đang dùng Faema E98</td>
+                    <td class="py-2 px-3 font-bold text-madg-orange">35 kg</td>
+                    <td class="py-2 px-3">Trần Nhật Nam</td>
+                  </tr>
+                  <tr>
+                    <td class="py-2 px-3 font-semibold text-slate-800">Tiệm Cà Phê Mùa Thu</td>
+                    <td class="py-2 px-3">Chị Mai Lan</td>
+                    <td class="py-2 px-3 font-mono">0988 776 655</td>
+                    <td class="py-2 px-3">12 Cầu Giấy, Q. Cầu Giấy, Hà Nội</td>
+                    <td class="py-2 px-3">Quán mới / Hỏi máy Casadio A1</td>
+                    <td class="py-2 px-3 font-bold text-madg-orange">20 kg</td>
+                    <td class="py-2 px-3">Bùi Anh Tuấn</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MỤC 2: FILE DANH MỤC SẢN PHẨM & KHO -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 rounded-xl bg-emerald-100 text-emerald-700 font-bold">
+              <i data-lucide="package-search" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 uppercase">Mục 2: File Danh Mục Sản Phẩm & Tồn Kho Hiện Tại</h2>
+              <p class="text-xs text-slate-500">Mục đích: Cấu hình tính năng Kế toán tải file Excel đối chiếu kho và làm dữ liệu cho AI MCP tra cứu giá.</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-bold px-2.5 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg">Cực kỳ quan trọng</span>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+          <p class="text-xs font-semibold text-slate-700">MADG chia danh mục sản phẩm làm 2 nhóm rõ ràng:</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="cpu" class="w-3.5 h-3.5 text-madg-blue"></i> Nhóm Thiết Bị & Máy Móc (Phần Cứng)
+              </p>
+              <ul class="list-disc list-inside text-slate-600 text-[11px] space-y-1 pl-1">
+                <li>Mã Model / SKU (Ví dụ: <em>FAEMA-E98, CASADIO-A1</em>)</li>
+                <li>Tên máy và Hãng sản xuất (Faema, Nuova Simonelli...)</li>
+                <li>Phân loại: Máy pha, Máy xay, Máy ép chậm, Máy dập nắp...</li>
+                <li>Số lượng tồn kho thực tế</li>
+                <li>Thời hạn bảo hành tiêu chuẩn (Ví dụ: 12 tháng, 24 tháng)</li>
+                <li>Giá niêm yết bán lẻ và giá đại lý</li>
+              </ul>
+            </div>
+
+            <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+              <p class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="coffee" class="w-3.5 h-3.5 text-madg-orange"></i> Nhóm Nguyên Liệu Tiêu Hao (Hạt, Bột, Siro)
+              </p>
+              <ul class="list-disc list-inside text-slate-600 text-[11px] space-y-1 pl-1">
+                <li>Tên nguyên liệu (Ví dụ: <em>Cà phê Robusta Gu Đậm, Arabica Cầu Đất, Matcha...</em>)</li>
+                <li>Đơn vị tính & Quy cách đóng gói (Gói 1kg, Thùng 10kg...)</li>
+                <li>Tồn kho hiện tại</li>
+                <li>Giá bán lẻ theo kg / Giá sỉ cho quán lấy số lượng lớn</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MỤC 3: MẪU BÁO GIÁ COMBO & ĐƠN HÀNG THỰC TẾ -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 rounded-xl bg-purple-100 text-purple-700 font-bold">
+              <i data-lucide="file-text" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 uppercase">Mục 3: Mẫu Báo Giá Combo Quán Thực Tế (Excel hoặc PDF)</h2>
+              <p class="text-xs text-slate-500">Mục đích: Thiết kế giao diện tạo báo giá combo thông minh, xuất PDF chuyên nghiệp trong 30 giây.</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-bold px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg">File mẫu 1 bản</span>
+        </div>
+
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed">
+          <p class="font-semibold text-slate-800 mb-2">Chỉ cần gửi 1 file Báo giá mà nhân viên MADG đang gửi cho chủ quán hiện tại, trong đó thể hiện rõ:</p>
+          <ul class="list-disc list-inside space-y-1.5 text-[11px] pl-1">
+            <li><strong>Cấu trúc Combo mở quán:</strong> Máy pha + Máy xay + Combo phụ kiện bar (Tamper nén, knockbox bã, ca đánh sữa, thảm lót...).</li>
+            <li><strong>Chính sách khuyến mại đi kèm:</strong> Tặng bao nhiêu kg cà phê ban đầu, tặng khóa học Barista, hỗ trợ công lắp đặt.</li>
+            <li><strong>Điều khoản thanh toán:</strong> Tỷ lệ đặt cọc (ví dụ cọc 30%), tỷ lệ thanh toán khi giao máy và sau khi chạy thử nghiệm thu.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- MỤC 4: QUY CHẾ VẬN HÀNH, KPI & BẢO MẬT (DẠNG GHI CHÚ NGẮN) -->
+      <section class="space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 rounded-xl bg-amber-100 text-madg-orange font-bold">
+              <i data-lucide="shield-alert" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h2 class="text-base font-extrabold text-slate-900 uppercase">Mục 4: Quy Chế Vận Hành, Cảnh Báo KPI Ngày 29 & Phân Quyền</h2>
+              <p class="text-xs text-slate-500">Mục đích: Cài đặt cảnh báo nước rút ngày 29 và chính sách giấu số điện thoại chống lộ dữ liệu.</p>
+            </div>
+          </div>
+          <span class="text-[11px] font-bold px-2.5 py-1 bg-amber-50 text-madg-darkorange border border-amber-200 rounded-lg">Quy định nội bộ</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <!-- Item 1 -->
+          <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div class="flex items-center gap-1.5 font-bold text-red-600">
+              <i data-lucide="alarm-clock" class="w-4 h-4"></i> Cảnh Báo Nước Rút Ngày 29
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              MADG cung cấp chỉ tiêu KPI tháng thông thường của 1 nhân viên Sales (ví dụ: Doanh số máy 150 triệu, Doanh số hạt 30 triệu).<br>
+              $\rightarrow$ Hệ thống sẽ tự động quét vào <strong>ngày 25 và 29 hàng tháng</strong> để cảnh báo nhân viên nguy cơ rớt KPI và gợi ý danh sách deal chốt nước rút.
+            </p>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div class="flex items-center gap-1.5 font-bold text-madg-blue">
+              <i data-lucide="lock" class="w-4 h-4"></i> Phân Quyền Giấu Số Điện Thoại
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              Xác nhận chính sách: Có muốn che 4 số giữa của SĐT khách (<code>090****456</code>) đối với nhân viên Sales thông thường để bảo vệ tệp khách độc quyền của MADG khi nhân viên nghỉ việc không?
+            </p>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="p-4 bg-white rounded-2xl border border-slate-200 shadow-sm space-y-2">
+            <div class="flex items-center gap-1.5 font-bold text-purple-600">
+              <i data-lucide="repeat" class="w-4 h-4"></i> Chu Kỳ Nhắc Mua & Bảo Trì
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              - Sau bao nhiêu ngày kể từ ngày giao đơn hạt gần nhất thì nhắc Sales gọi lại? (Thường là 15 - 20 ngày).<br>
+              - Sau bao nhiêu tháng kể từ khi bán máy thì nhắc lịch kỹ thuật thay gioăng cao su và khử cặn boiler? (Thường là 3 - 6 tháng).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHECKLIST TỔNG HỢP & XÁC NHẬN BÀN GIAO -->
+      <section class="p-5 bg-gradient-to-br from-slate-900 via-slate-800 to-madg-navy rounded-2xl text-white space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700 pb-3">
+          <div>
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="check-square" class="w-4 h-4 text-madg-orange"></i> Bảng Checklist Thu Thập Nhanh
+            </h3>
+            <p class="text-xs text-slate-400">Quý khách có thể tích chọn những mục đã có sẵn để gửi đội ngũ triển khai:</p>
+          </div>
+          <span class="text-[11px] px-2.5 py-1 bg-white/10 rounded-full font-mono text-slate-300">4 / 4 Hạng mục</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <label class="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition">
+            <input type="checkbox" checked class="mt-0.5 rounded text-madg-orange focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">1. File Khách Hàng & Quán Mẫu</p>
+              <p class="text-[11px] text-slate-400">Excel/Google Sheet (5-10 dòng thực tế có tên quán, SĐT, máy đang dùng)</p>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition">
+            <input type="checkbox" checked class="mt-0.5 rounded text-madg-orange focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">2. File Danh Mục Kho & Sản Phẩm</p>
+              <p class="text-[11px] text-slate-400">Excel (Thiết bị máy móc, thời hạn bảo hành, hạt cà phê, giá niêm yết)</p>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition">
+            <input type="checkbox" checked class="mt-0.5 rounded text-madg-orange focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">3. Mẫu Báo Giá Combo Quán Thực Tế</p>
+              <p class="text-[11px] text-slate-400">1 file Excel hoặc PDF báo giá Sales MADG đang gửi khách</p>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-2.5 p-3 rounded-xl bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition">
+            <input type="checkbox" checked class="mt-0.5 rounded text-madg-orange focus:ring-0">
+            <div>
+              <p class="font-bold text-slate-200">4. Ghi Chú Quy Chế KPI & Kênh Nhận Cảnh Báo</p>
+              <p class="text-[11px] text-slate-400">Xác nhận nhận cảnh báo qua Telegram/Zalo và công thức KPI ngày 29</p>
+            </div>
+          </label>
+        </div>
+
+        <div class="pt-2 text-center text-xs text-slate-400">
+          Sau khi Quý khách tải các tệp trên vào thư mục Drive, đội ngũ kỹ thuật sẽ tiến hành ráp dữ liệu và hoàn thiện hệ thống trong <strong>5 - 7 ngày</strong>.
+        </div>
+      </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="p-6 border-t border-slate-200 bg-slate-50 text-center text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-slate-800">MADG CRM SOLUTIONS</span>
+        <span>• Đồng hành cùng sự phát triển chuỗi thiết bị & nguyên liệu F&B</span>
+      </div>
+      <div class="text-[11px] text-slate-400">
+        Tài liệu lưu hành nội bộ dự án MADG - 2026
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
